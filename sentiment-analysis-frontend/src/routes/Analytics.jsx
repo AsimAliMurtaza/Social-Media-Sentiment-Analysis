@@ -1,0 +1,24 @@
+import React from "react";
+import SideNavbar from "../components/SideNavbar/SideNavbar";
+import { Box, Typography } from "@mui/material";
+import Navbar from "../components/Navbar/Navbar.jsx";
+
+
+export default function Analytics() {
+  return (
+    <>
+    <Navbar />
+    <Box height={30}/>
+
+    <Box sx={{ display: "flex" }}>
+        <SideNavbar />
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <h1>Analytics</h1>
+        <Typography paragraph>
+          Welcome to the Analytics page.
+        </Typography>
+      </Box>
+    </Box>
+    </>
+  );
+}
