@@ -9,6 +9,7 @@ import Stack from "@mui/material/Stack";
 import { CardTravel, Settings } from "@mui/icons-material";
 import "../routes/Dashboard.css";
 import AccordionTransition from "../components/Accordian/Accordian";
+import LineChart from "../components/Charts/LineChart";
 
 export default function Home() {
   return (
@@ -113,7 +114,9 @@ export default function Home() {
             <Grid container spacing={2}>
               <Grid item xs={8}>
                 <Card sx={{ height: 60 + "vh" }}>
-                  <CardContent></CardContent>
+                  <CardContent>
+                    <LineChart />
+                  </CardContent>
                 </Card>
               </Grid>
               <Grid item xs={4}>
