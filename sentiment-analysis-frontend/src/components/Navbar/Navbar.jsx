@@ -21,6 +21,9 @@ import { useStore } from '../../store';
 const AppBar = styled(MuiAppBar, {
   })(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'white',
+    color: 'black',
+    elevation: 0,
   }));
 
 const Search = styled('div')(({ theme }) => ({
@@ -57,6 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
+    
     [theme.breakpoints.up('md')]: {
       width: '20ch',
     },
@@ -166,7 +170,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" elevation={0}>
         <Toolbar>
           <IconButton
             size="large"
@@ -184,7 +188,7 @@ export default function Navbar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            Social Media Sentiment Analysis
           </Typography>
           <Search>
             <SearchIconWrapper>

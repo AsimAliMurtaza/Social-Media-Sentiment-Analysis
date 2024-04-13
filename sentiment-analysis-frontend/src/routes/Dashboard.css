@@ -1,0 +1,44 @@
+.padding-container{
+    padding: 10px, 10px, 10px, 10px;
+}
+
+.card-container{
+    background: linear-gradient(90deg,rgb(189, 227, 93) 0%, rgb(127, 153, 62) 100%);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.item-title{
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+.item-description{
+    font-size: 15px;
+}
+
+.icon-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gradient{
+    background: linear-gradient(90deg,rgb(131, 93, 227) 0%, rgb(86, 54, 166) 100%);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.gradient-light{
+    background: linear-gradient(90deg,rgb(111, 70, 215) 0%, rgb(131, 93, 227) 100%);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.body-container{
+    background-color: #f0f0f0;
+}
