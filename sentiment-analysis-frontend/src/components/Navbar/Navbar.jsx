@@ -21,8 +21,7 @@ import { useStore } from '../../store';
 const AppBar = styled(MuiAppBar, {
   })(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: 'white',
-    color: 'black',
+    backgroundColor: "rgb(131, 93, 227)",
     elevation: 0,
   }));
 
