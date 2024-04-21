@@ -1,6 +1,8 @@
 const express = require('express');
 const mssql = require('mssql/msnodesqlv8');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 
@@ -8,6 +10,7 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }));
 
+app.use(bodyParser.json());
 const PORT = process.env.PORT || 5000;
 
 // Database configuration
@@ -36,7 +39,15 @@ app.get('/products', async (req, res) => {
   }
 });
 
+app.post('/data', (req, res) => {
+  const formData = req.body;
+  console.log('Received form data:', formData);
+  // Handle the form data here (e.g., save it to a database)
+  res.status(200).send('Form data received successfully');
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

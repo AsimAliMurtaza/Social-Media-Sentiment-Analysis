@@ -16,7 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Analytics, Home, Receipt, Settings } from "@mui/icons-material";
+import { Analytics, Home, InputOutlined, Receipt, Settings } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
 
@@ -172,6 +172,32 @@ export default function SideNavbar() {
                 <Receipt />
               </ListItemIcon>
               <ListItemText primary="Reports" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/form");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <InputOutlined />
+              </ListItemIcon>
+              <ListItemText primary="Form" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
