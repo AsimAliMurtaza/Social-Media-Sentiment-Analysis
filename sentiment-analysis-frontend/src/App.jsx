@@ -6,7 +6,10 @@ import Settings from "./routes/Settings";
 import Reports from "./routes/Reports";
 import Analytics from "./routes/Analytics";
 import { NextUIProvider } from "@nextui-org/react";
-import InputForm from "./routes/InputForm";
+import FacebookInputForm from "./routes/FacebookPage.jsx";
+import InstaInputForm from "./routes/InstagramPage.jsx";
+import ProductCategoryForm from "./routes/CategoryPage.jsx";
+
 
 function App() {
   return (
@@ -18,7 +21,9 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/form" element={<InputForm />} />
+            <Route path="/fb-form" element={<FacebookInputForm />} />
+            <Route path="/insta-form" element={<InstaInputForm />} />
+            <Route path="/select-category" element={<ProductCategoryForm />} />
           </Routes>
         </BrowserRouter>
       </NextUIProvider>

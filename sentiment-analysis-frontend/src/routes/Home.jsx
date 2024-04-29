@@ -17,7 +17,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:5000/products") // Update the URL with your backend server address
+    axios.get("http://localhost:5000/get-products") // Update the URL with your backend server address
       .then((response) => {
         setProducts(response.data);
       })
@@ -45,13 +45,13 @@ export default function Home() {
                     >
                       <CardContent>
                         <div>
-                          <CardTravel sx={{ color: "white" }} />
+                          <CardTravel sx={{ color: "black" }} />
                         </div>
                         <Typography
                           gutterBottom
                           variant="h5"
                           component="div"
-                          sx={{ color: "white" }}
+                          sx={{ color: "black" }}
                         >
                           {product.ProductName}
                         </Typography>
@@ -59,9 +59,9 @@ export default function Home() {
                           gutterBottom
                           variant="body2"
                           component="div"
-                          sx={{ color: "whitesmoke" }}
+                          sx={{ color: "black" }}
                         >
-                          Price: ${product.UnitPrice}
+                          PID: {product.ProductID}
                         </Typography>
                       </CardContent>
                     </Card>

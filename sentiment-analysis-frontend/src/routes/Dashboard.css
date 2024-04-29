@@ -26,7 +26,7 @@
 }
 
 .gradient{
-    background: linear-gradient(90deg,rgb(131, 93, 227) 0%, rgb(86, 54, 166) 100%);
+    background: linear-gradient(90deg,rgb(249, 240, 240) 0%, rgb(230, 230, 230) 100%);
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -40,11 +40,11 @@
 }
 
 .body-container{
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 .chart-container{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 10px;
     margin: 10px;

@@ -2,21 +2,16 @@ import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Analytics, Home, InputOutlined, Receipt, Settings } from "@mui/icons-material";
+import { Analytics, Facebook, Home, InputOutlined, Instagram, Receipt, Settings } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
 
@@ -178,7 +173,7 @@ export default function SideNavbar() {
             disablePadding
             sx={{ display: "block" }}
             onClick={() => {
-              navigate("/form");
+              navigate("/fb-form");
             }}
           >
             <ListItemButton
@@ -195,9 +190,35 @@ export default function SideNavbar() {
                   justifyContent: "center",
                 }}
               >
-                <InputOutlined />
+                <Facebook />
               </ListItemIcon>
-              <ListItemText primary="Form" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primary="Facebook Profile" sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              navigate("/insta-form");
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <Instagram />
+              </ListItemIcon>
+              <ListItemText primary="Instagram Profile" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </ListItem>
           <ListItem
