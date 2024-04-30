@@ -8,45 +8,46 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Facebook, Instagram } from "@mui/icons-material";
+import { Facebook, Instagram, Password } from "@mui/icons-material";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function FacebookInputForm() {
   const [formData, setFormData] = React.useState({
     username: "",
-    password: "",
     PlatformId: 1,
   });
 
   const [signInData, setSignInData] = React.useState({
     username: "",
-    password: "",
   });
 
   const navigate = useNavigate();
 
-  const handleChange = (event) => {
+  const onChangeHandle = (event) => {
     const { id, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
       [id]: value,
     }));
+    console.log(formData);
   };
 
-  const handleSignInChange = (event) => {
+  const onChangeSignInHandle = (event) => {
     const { id, value } = event.target;
     setSignInData((prevData) => ({
       ...prevData,
       [id]: value,
     }));
+    console.log(signInData);
   };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -61,11 +62,13 @@ export default function FacebookInputForm() {
 
       if (response.ok) {
         console.log("Sign-up successful");
-        navigate("/select-category");
+        toast.success("Sign-up successful");
         // Optionally, you can redirect the user to another page or show a success message
       } else {
-        console.error("Sign-up failed:", response.statusText);
-        // Handle error
+        const errorMessage = await response.text(); // Get the error message from the response
+        console.error("Sign-up failed:", errorMessage);
+        // Show the error message in a toast
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error("Error signing up:", error);
@@ -81,16 +84,18 @@ export default function FacebookInputForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(signInData),
+        body: JSON.stringify([signInData]),
       });
 
       if (response.ok) {
         console.log("Sign-in successful");
+        toast.success("Sign-in successful");
         navigate("/select-category");
 
         // Optionally, you can redirect the user to another page or show a success message
       } else {
         console.error("Sign-in failed:", response.statusText);
+        toast.error("Sign-in failed");
         // Handle error
       }
     } catch (error) {
@@ -140,7 +145,7 @@ export default function FacebookInputForm() {
                       label="Username"
                       variant="outlined"
                       value={signInData.username}
-                      onChange={handleSignInChange}
+                      onChange={(event) => onChangeSignInHandle(event)}
                       fullWidth
                       sx={{ marginBottom: 5 }}
                     />
@@ -151,6 +156,7 @@ export default function FacebookInputForm() {
                       <OutlinedInput
                         id="outlined-adornment-password"
                         type={showPassword ? "text" : "password"}
+                        onChange={(event) => onChangeSignInHandle(event)}
                         endAdornment={
                           <InputAdornment position="end">
                             <IconButton
@@ -158,7 +164,6 @@ export default function FacebookInputForm() {
                               onClick={handleClickShowPassword}
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
-                              value={formData.password}
                             >
                               {showPassword ? (
                                 <VisibilityOff />
@@ -206,7 +211,7 @@ export default function FacebookInputForm() {
                     id="username"
                     label="Username"
                     variant="outlined"
-                    onChange={handleChange}
+                    onChange={(event) => onChangeHandle(event)}
                     fullWidth
                     value={formData.username}
                     sx={{
@@ -220,6 +225,7 @@ export default function FacebookInputForm() {
                     <OutlinedInput
                       id="outlined-adornment-password"
                       type={showPassword ? "text" : "password"}
+                      onChange={(event) => onChangeHandle(event)}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -227,7 +233,6 @@ export default function FacebookInputForm() {
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
-                            value={formData.password}
                           >
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                           </IconButton>
@@ -250,6 +255,7 @@ export default function FacebookInputForm() {
                   >
                     Submit
                   </Button>
+                  <ToastContainer />
                 </form>
               </CardContent>
             </Card>

@@ -74,24 +74,39 @@ app.get("/get-categories", async (req, res) => {
 });
 
 // Route to handle sign-up/ CREATE operation
-app.post("/fb-form-signup", (req, res) => {
+app.post("/fb-form-signup", async (req, res) => {
   const formData = req.body;
   console.log("Received form data:", formData);
 
-  const { username, password, PlatformId } = formData;
+  const {
+    username,
+    PlatformId,
+    "outlined-adornment-password": password,
+  } = formData;
 
-  // Assuming you have established a connection to your MSSQL database
-  const request = new mssql.Request();
+  try {
+    // Check if the username already exists in the database
+    const request = new mssql.Request();
+    const result = await request.query(
+      `SELECT * FROM Profile WHERE ProfileName = '${username}'`
+    );
 
-  // Insert username and password into the users table
-  request
-    .query(
-      `INSERT INTO Profile (ProfileName, Password, PlatformId)
-                VALUES ('${username}', '${password}', '${PlatformId}')`
-    )
-    .then(() => console.log("Profile data inserted successfully"))
-    .catch((err) => console.error("Error inserting user data:", err));
-  res.status(200).send("Sign-up data received and processed successfully");
+    if (result.recordset.length > 0) {
+      // If the username already exists, send a response to the frontend
+      res.status(400).send("Username already exists");
+    } else {
+      // If the username does not exist, insert the new profile data into the database
+      await request.query(
+        `INSERT INTO Profile (ProfileName, password, PlatformId)
+                  VALUES ('${username}', '${password}', '${PlatformId}')`
+      );
+      console.log("Profile data inserted successfully");
+      res.status(200).send("Sign-up data received and processed successfully");
+    }
+  } catch (error) {
+    console.error("Error inserting user data:", error);
+    res.status(500).send("Internal server error");
+  }
 });
 
 app.post("/fb-form-addproducts", (req, res) => {
@@ -119,26 +134,45 @@ app.post("/fb-form-login", (req, res) => {
   const formData = req.body;
   console.log("Received form data:", formData);
 
-  const { username, password } = formData;
+  const { username, "outlined-adornment-password": password } = formData;
+  console.log("Username:", username);
+  console.log("Password:", password);
 
   // Assuming you have established a connection to your MSSQL database
   const request = new mssql.Request();
 
-  // Check if the username and password exist in the users table
+  // Check if the username exists in the users table
   request
-    .query(
-      `SELECT * FROM Profile WHERE ProfileName = '${username}' AND password = '${password}'`
-    )
+    .query(`SELECT * FROM Profile WHERE ProfileName = '${username}'`)
     .then((result) => {
       if (result.recordset.length > 0) {
-        console.log("Login successful");
-        res.status(200).send("Login successful");
+        // If the username exists, check if the password is correct
+        request
+          .query(
+            `SELECT * FROM Profile WHERE ProfileName = '${username}' AND Password = '${password}'`
+          )
+          .then((loginResult) => {
+            if (loginResult.recordset.length > 0) {
+              console.log("Login successful");
+              res.status(200).send("Login successful");
+            } else {
+              console.log("Incorrect password");
+              res.status(401).send("Incorrect password");
+            }
+          })
+          .catch((loginErr) => {
+            console.error("Error querying user data:", loginErr);
+            res.status(500).send("Internal server error");
+          });
       } else {
-        console.log("Login failed");
-        res.status(401).send("Login failed");
+        console.log("User does not exist");
+        res.status(404).send("User does not exist");
       }
     })
-    .catch((err) => console.error("Error querying user data:", err));
+    .catch((err) => {
+      console.error("Error querying user data:", err);
+      res.status(500).send("Internal server error");
+    });
 });
 
 // Start the server

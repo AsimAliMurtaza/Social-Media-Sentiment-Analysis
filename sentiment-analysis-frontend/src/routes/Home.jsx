@@ -15,9 +15,9 @@ import axios from "axios";
 export default function Home() {
   const [products, setProducts] = useState([]);
 
-
   useEffect(() => {
-    axios.get("http://localhost:5000/get-products") // Update the URL with your backend server address
+    axios
+      .get("http://localhost:5000/get-products") // Update the URL with your backend server address
       .then((response) => {
         setProducts(response.data);
       })
@@ -33,7 +33,7 @@ export default function Home() {
         <Box height={70} />
         <Box sx={{ display: "flex" }}>
           <SideNavbar />
-          <Box component="main" sx={{ flexGrow: 1, p: 2}}>
+          <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
             <Grid container spacing={2}>
               <Grid item xs={8}>
                 <Stack direction="row" spacing={2}>
@@ -76,7 +76,9 @@ export default function Home() {
                         <Settings />
                       </div>
                       <div className="padding-container">
-                        <span className="item-title">Insert Item 1 here okay? </span>
+                        <span className="item-title">
+                          Insert Item 1 here okay?{" "}
+                        </span>
                         <br />
                         <span className="item-description">
                           Insert Description here okay?
@@ -111,7 +113,7 @@ export default function Home() {
                 </Card>
               </Grid>
               <Grid item xs={4}>
-                <Card sx={{ height: 60 + "vh" }}>
+                <Card sx={{ maxHeight: "100vh" }}>
                   <CardContent>
                     <AccordionTransition />
                   </CardContent>
@@ -123,4 +125,4 @@ export default function Home() {
       </div>
     </>
   );
-}  
+}
