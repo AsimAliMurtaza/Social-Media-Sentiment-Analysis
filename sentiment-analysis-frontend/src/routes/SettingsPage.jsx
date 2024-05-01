@@ -1,5 +1,5 @@
 import React from "react";
-import SideNavbar from "../components/SideNavbar/SideNavbar";
+import SideNavbar from "../components/SideNavbar/SideNavbar.jsx";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar.jsx";
 

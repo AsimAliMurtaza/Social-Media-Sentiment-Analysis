@@ -4,13 +4,12 @@ import { Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputFormCategory from "../components/InputForm/InputFormCategory";
 
-export default function ProductPage() {
+export default function PostsPage() {
   const features = [
     {
-      heading: "Manage Categories",
-      description: "Add, edit, and delete categories in the inventory.",
+      heading: "Manage Posts",
+      description: "Add, edit, and delete posts in the database.",
     },
   ];
 
@@ -21,7 +20,7 @@ export default function ProductPage() {
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%" }}>
           <SideNavbar />
-          <CustomCard features={features} inputForm={<InputFormCategory/>}/>
+          <CustomCard features={features}/>
         </Box>
       </div>
     </>

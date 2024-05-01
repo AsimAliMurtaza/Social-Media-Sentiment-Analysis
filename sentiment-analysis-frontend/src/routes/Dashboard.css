@@ -41,6 +41,7 @@
 
 .body-container{
     background-color: #ffffff;
+    display: flexbox;
 }
 
 .chart-container{

@@ -11,9 +11,51 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Analytics, Facebook, Home, InputOutlined, Instagram, Receipt, Settings } from "@mui/icons-material";
+import {
+  AdminPanelSettings,
+  Analytics,
+  Category,
+  Facebook,
+  Home,
+  InputOutlined,
+  Instagram,
+  PostAdd,
+  PostAddSharp,
+  Receipt,
+  Settings,
+  ShoppingCart,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
+import { ListItemSecondaryAction } from "@mui/material";
+
+const items = [
+  {
+    text: "Products",
+    icon: <ShoppingCart />,
+    path: "/",
+  },
+  {
+    text: "Category",
+    icon: <Category />,
+    path: "/category",
+  },
+  {
+    text: "Posts",
+    icon: <PostAdd />,
+    path: "/posts",
+  },
+  {
+    text: "Users",
+    icon: <AdminPanelSettings />,
+    path: "/users",
+  },
+  {
+    text: "Settings",
+    icon: <Settings />,
+    path: "/settings",
+  },
+];
 
 const drawerWidth = 240;
 
@@ -66,7 +108,6 @@ const Drawer = styled(MuiDrawer, {
 
 export default function SideNavbar() {
   const theme = useTheme();
-  //   const [open, setOpen] = React.useState(true);
 
   const setOpen = useStore((state) => state.setOpen);
   const open = useStore((state) => state.dopen);
@@ -88,165 +129,38 @@ export default function SideNavbar() {
         </DrawerHeader>
         <Divider />
         <List>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+          {items.map((item, index) => (
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              key={item.text}
+              onClick={() => {
+                navigate(item.path);
               }}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/analytics");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Analytics />
-              </ListItemIcon>
-              <ListItemText
-                primary="Analytics"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/reports");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Receipt />
-              </ListItemIcon>
-              <ListItemText primary="Reports" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/fb-form");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Facebook />
-              </ListItemIcon>
-              <ListItemText primary="Facebook Profile" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/insta-form");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Instagram />
-              </ListItemIcon>
-              <ListItemText primary="Instagram Profile" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              navigate("/settings");
-            }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <Settings />
-              </ListItemIcon>
-              <ListItemText primary="Settings" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
