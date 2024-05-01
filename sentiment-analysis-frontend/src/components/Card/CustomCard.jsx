@@ -5,25 +5,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import "../../routes/Dashboard.css";
 
-function CustomCard({ features, inputForm}) {
+function CustomCard({ inputForm }) {
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
-      <Grid container spacing={0}>
-        {features.map((feature, index) => (
-          <Grid item xs={12} key={index}>
-            <Card sx={{ height: "100vh" }}>
-              <CardContent>
-                {inputForm}
-              </CardContent>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Click here
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <Card sx={{ height: "60vh", overflow: "auto", padding: "10px" }}>
+        <CardContent>{inputForm}</CardContent>
+      </Card>
     </Box>
   );
 }
