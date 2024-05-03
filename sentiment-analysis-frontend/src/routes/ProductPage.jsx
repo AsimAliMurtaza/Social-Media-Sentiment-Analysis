@@ -37,10 +37,10 @@ export default function ProductPage() {
         <Navbar />
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%", marginRight: "0%" }}>
-          <SideNavbar />
+          <SideNavbar /> 
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <CustomCard inputForm={<List items={items} />} />
+            <CustomCard inputForm={<List items={items} title={"Manage Products"} />} />
             </Grid>
           </Grid>
         </Box>

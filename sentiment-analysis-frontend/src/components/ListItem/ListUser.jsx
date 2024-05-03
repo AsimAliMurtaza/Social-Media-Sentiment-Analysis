@@ -1,13 +1,13 @@
 import React from "react";
 import "../../routes/Dashboard.css"; // Import CSS file for styling
 import EditProductForm from "../InputForm/InputFormEditProduct"; // Import the EditProductForm component
-import { Delete, Edit, Title } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 
-const ListItem = ({ item, onEdit, onDelete }) => {
+const ListUser = ({ item, onEdit, onDelete }) => {
   return (
     <li className="list-item">
       <span className="item-details">
-        {item.name} - {item.description}        
+        {item.name} - {item.email} - {item.gender}
       </span>
       <button className="edit-button" onClick={() => onEdit(item)}>
         <Edit/>
@@ -19,7 +19,8 @@ const ListItem = ({ item, onEdit, onDelete }) => {
   );
 };
 
-const List = ({ items, title, onEdit, onDelete }) => {
+
+const ListUsers = ({ items, title, onEdit, onDelete }) => {
   // State to manage whether the edit form is open or not
   const [editItemId, setEditItemId] = React.useState(null);
 
@@ -38,7 +39,7 @@ const List = ({ items, title, onEdit, onDelete }) => {
       <h2>{title}</h2>
       <ul className="list">
         {items.map((item) => (
-          <ListItem
+          <ListUser
             key={item.id}
             item={item}
             onEdit={handleEdit} // Pass the handleEdit function as prop
@@ -54,7 +55,7 @@ const List = ({ items, title, onEdit, onDelete }) => {
           product={items.find((item) => item.id === editItemId)}
           onSave={(editedProduct) => {
             // Handle saving the edited product details
-            console.log("Edited product:", editedProduct);
+            console.log("Edited users:", editedProduct);
             handleCloseEditForm(); // Close the edit form after saving
           }}
         />
@@ -63,4 +64,5 @@ const List = ({ items, title, onEdit, onDelete }) => {
   );
 };
 
-export default List;
+
+export default ListUsers;

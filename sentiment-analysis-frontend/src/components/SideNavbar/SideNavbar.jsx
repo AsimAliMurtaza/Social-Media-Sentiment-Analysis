@@ -6,7 +6,7 @@ import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import { Image, Comment } from "@mui/icons-material";
+import { Image, Comment, ViewList } from "@mui/icons-material";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -17,6 +17,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ViewPost from "../../routes/PostsPage";
+import Slide from '@mui/material/Slide';
+
 import {
   AdminPanelSettings,
   Analytics,
@@ -31,7 +33,9 @@ import {
   Settings,
   ShoppingCart,
   Create,
-  Article
+  Article,
+  View,
+  Add,Camera,Sort,Visibility,ViewComfy
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
@@ -41,7 +45,7 @@ const items = [
   {
     text: "Products",
     icon: <ShoppingCart />,
-    path: "/products",
+    path: "",
     subitems: [
       {
         text: "Add Products",
@@ -50,7 +54,7 @@ const items = [
       },
       {
         text: "View Products",
-        icon: <VisibilityIcon/>,
+        icon: <ViewList/>,
         path: "/viewproducts",
       },
     ]
@@ -58,16 +62,29 @@ const items = [
   {
     text: "Category",
     icon: <Category />,
-    path: "/category",
+    path: "",
+    subitems: [
+      {
+        text: "Add Category",
+        icon: <Add/>,
+        path: "/category",
+      },
+      
+      {
+        text: "Manage Categories",
+        icon: <Sort />,
+        path: "/managecategories",
+      },
+    ],
   },
   {
     text: "Posts",
-    icon: <Article />,
+    icon: <Camera />,
     path: "/posts",
     subitems: [
       {
         text: "View",
-        icon: <VisibilityIcon/>,
+        icon: <ViewList/>,
         path: "/viewpost",
       },
       {
@@ -97,6 +114,7 @@ const items = [
         icon: <VisibilityIcon/>,
         path: "/viewproducts",
       },
+    ],
   },
   {
     text: "Settings",
@@ -105,7 +123,7 @@ const items = [
   },
 ];
 
-const drawerWidth = 240;
+const drawerWidth = 265;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -159,25 +177,20 @@ export default function SideNavbar() {
   const setOpen = useStore((state) => state.setOpen);
   const open = useStore((state) => state.dopen);
   const navigate = useNavigate();
-  const [isFormVisible, setFormVisible] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(null);
+  const [openItems, setOpenItems] = React.useState([]);
 
-  React.useEffect(() => {
-    if (!open) {
-      // Close submenus when the drawer is closed
-      setFormVisible(false);
-      setSelectedItem(null);
-    }
-  }, [open]);
-
-  const handleSubItemClick = (path) => {
-    if (path) {
-      navigate(path);
+  const handleItemClick = (item) => {
+    if (item.subitems) {
+      // Toggle the open state of subitems for the clicked main item
+      const isOpen = openItems.includes(item.text);
+      setOpenItems(isOpen ? openItems.filter((openItem) => openItem !== item.text) : [...openItems, item.text]);
     } else {
-      setFormVisible(!isFormVisible);
+      // Navigate to the path if it's not a main item with subitems
+      navigate(item.path);
+      setSelectedItem(item);
     }
   };
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -198,15 +211,7 @@ export default function SideNavbar() {
               disablePadding
               sx={{ display: "block" }}
               key={item.text}
-              onClick={() => {
-                if (item.subitems) {
-                  // Toggle the submenu visibility
-                  setFormVisible(item === selectedItem && !isFormVisible);
-                  setSelectedItem(item);
-                } else {
-                  navigate(item.path);
-                }
-              }}
+              onClick={() => handleItemClick(item)}
             >
               <ListItemButton
                 sx={{
@@ -227,17 +232,19 @@ export default function SideNavbar() {
                 <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
               {item.subitems && (
-                <Collapse in={isFormVisible} timeout="auto" unmountOnExit>
+                <Collapse in={openItems.includes(item.text)} timeout="auto" unmountOnExit>
                   <List component="div" disablePadding>
                     {item.subitems.map((subitem) => (
-                      <ListItemButton
-                        key={subitem.text}
-                        sx={{ pl: 4 }}
-                        onClick={() => navigate(subitem.path)}
-                      >
-                        <ListItemIcon>{subitem.icon}</ListItemIcon>
-                        <ListItemText primary={subitem.text} />
-                      </ListItemButton>
+                      <Slide direction="down" in={openItems.includes(item.text)} timeout={300} key={subitem.text}>
+                        <ListItemButton
+                          key={subitem.text}
+                          sx={{ pl: 4 }}
+                          onClick={() => navigate(subitem.path)}
+                        >
+                          <ListItemIcon>{subitem.icon}</ListItemIcon>
+                          <ListItemText primary={subitem.text} />
+                        </ListItemButton>
+                      </Slide>
                     ))}
                   </List>
                 </Collapse>

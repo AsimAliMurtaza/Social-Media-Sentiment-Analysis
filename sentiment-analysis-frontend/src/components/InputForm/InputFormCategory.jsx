@@ -48,60 +48,55 @@ function InputFormCategory() {
     event.preventDefault();
     // Handle submission logic here
     console.log(productData);
-    navigate("/"); // Redirect to home page
   };
 
   return (
-    <div>
-      <Box sx={{ maxWidth: 400, margin: "auto" }}>
-        <form onSubmit={handleProductSubmit}>
-          <div style={{ textAlign: "center" }}>
-            <h1>Add Category</h1>
-          </div>
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={productData.category}
-              label="Category"
-              onChange={handleProductChange}
-              sx={{ marginBottom: 6 }}
-            >
-              {categories.map((category) => (
-                <MenuItem key={category} value={category}>
-                  {category}
-                </MenuItem>
-              ))}
-              <MenuItem value="Other">Other</MenuItem>{" "}
-              {/* Manual entry option */}
-            </Select>
-          </FormControl>
-          {/* Text field for entering custom category */}
-          {productData.category === "Other" && (
-            <TextField
-              id="custom-category"
-              label="Enter Category"
-              variant="outlined"
-              value={productData.customCategory}
-              onChange={handleCustomCategoryChange}
-              sx={{ marginBottom: 4 }}
-            />
-          )}
-          <Button
-            type="submit"
-            variant="contained"
-            style={{
-              backgroundColor: "rgb(22, 25, 18)",
-              color: "#ffffff",
-            }}
-            fullWidth
+    <Box sx={{ width: "100%" }}>
+      <form onSubmit={handleProductSubmit}>
+        <h1>Add Category</h1>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={productData.category}
+            label="Category"
+            onChange={handleProductChange}
+            sx={{ marginBottom: 6 }}
           >
-            Submit
-          </Button>
-        </form>
-      </Box>
-    </div>
+            {categories.map((category) => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+            <MenuItem value="Other">Other</MenuItem> {/* Manual entry option */}
+          </Select>
+        </FormControl>
+        {/* Text field for entering custom category */}
+        {productData.category === "Other" && (
+          <TextField
+            id="custom-category"
+            label="Enter Category"
+            variant="outlined"
+            fullWidth
+            value={productData.customCategory}
+            onChange={handleCustomCategoryChange}
+            sx={{ marginBottom: 4 }}
+          />
+        )}
+        <Button
+          type="submit"
+          variant="contained"
+          style={{
+            backgroundColor: "rgb(22, 25, 18)",
+            color: "#ffffff",
+          }}
+          fullWidth
+        >
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 }
 
