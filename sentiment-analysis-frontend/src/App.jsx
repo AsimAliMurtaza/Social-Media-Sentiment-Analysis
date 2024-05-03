@@ -8,6 +8,7 @@ import Settings from "./routes/SettingsPage.jsx";
 import { NextUIProvider } from "@nextui-org/react";
 import UsersPage from "./routes/UsersPage.jsx";
 import ProductCategoryForm from "./routes/CategoryPage2.jsx";
+import Createpost from './routes/PostsPage.jsx'
 
 
 function App() {
@@ -18,10 +19,11 @@ function App() {
           <Routes>
             <Route path="/" element={<ProductPage />} />
             <Route path="/category" element={<CategoryPage />} />
-            <Route path="/posts" element={<PostsPage />} />
+          
             <Route path="/users" element={<UsersPage />} />
             <Route path="/select-category" element={<ProductCategoryForm />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/posts" element={<Createpost />} />
           </Routes>
         </BrowserRouter>
       </NextUIProvider>

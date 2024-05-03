@@ -6,11 +6,16 @@ import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-
+import { Image, Comment } from "@mui/icons-material";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Collapse from '@mui/material/Collapse';
+import StarBorder from '@mui/icons-material/StarBorder';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
+
 import {
   AdminPanelSettings,
   Analytics,
@@ -44,6 +49,18 @@ const items = [
     text: "Posts",
     icon: <PostAdd />,
     path: "/posts",
+    subitems: [
+      {
+        text: "Create Post",
+        icon: <AddCircleOutlineIcon />,
+        path: "/Createpost",
+      },
+      {
+        text: "Manage Posts",
+        icon: <EditIcon />,
+        path: "Manage Posts",
+      },
+    ]
   },
   {
     text: "Users",
@@ -159,6 +176,25 @@ export default function SideNavbar() {
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
+              {item.subitems ?
+                <Collapse in={open} timeout="auto" unmountOnExit>
+                  {item.subitems.map(
+                    (subitem) =>
+                      <List component="div" disablePadding onClick={() => {
+                        navigate(subitem.path);
+                      }}>
+                        <ListItemButton sx={{ pl: 4 }}>
+                          <ListItemIcon>
+                            {subitem.icon}
+                          </ListItemIcon>
+                          <ListItemText primary={subitem.text} />
+                        </ListItemButton>
+                      </List>
+
+                  )}
+
+                </Collapse> : null}
+
             </ListItem>
           ))}
         </List>

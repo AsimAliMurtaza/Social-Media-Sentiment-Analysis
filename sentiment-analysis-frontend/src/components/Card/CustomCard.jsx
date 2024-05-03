@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import "../../routes/Dashboard.css";
 
+
 function CustomCard({ inputForm }) {
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
