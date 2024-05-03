@@ -17,8 +17,8 @@ const AppBar = styled(
   {}
 )(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: "rgb(241, 236, 200)",
-  color: "rgb(0, 0, 0)",
+  backgroundColor: "rgb(48,48,48)",
+  color: "rgb(255,255,255))",
   elevation: 0,
 }));
 
@@ -66,7 +66,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -99,6 +99,7 @@ export default function Navbar() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+
       </MenuItem>
     </Menu>
   );

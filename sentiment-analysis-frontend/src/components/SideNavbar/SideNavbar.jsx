@@ -40,85 +40,86 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
 import { ListItemSecondaryAction } from "@mui/material";
+import { color } from "framer-motion";
 
 const items = [
   {
     text: "Products",
-    icon: <ShoppingCart />,
+    icon: <ShoppingCart sx={{color: "rgb(255,255,255)"}} />,
     path: "",
     subitems: [
       {
         text: "Add Products",
-        icon: <AddCircleOutlineIcon/>,
+        icon: <AddCircleOutlineIcon sx={{color: "rgb(255,255,255)"}} />,
         path: "/addproducts",
       },
       {
         text: "View Products",
-        icon: <ViewList/>,
+        icon: <ViewList sx={{color: "rgb(255,255,255)"}}/>,
         path: "/viewproducts",
       },
     ]
   },
   {
     text: "Category",
-    icon: <Category />,
+    icon: <Category sx={{color: "rgb(255,255,255)"}} />,
     path: "",
     subitems: [
       {
         text: "Add Category",
-        icon: <Add/>,
+        icon: <Add sx={{color: "rgb(255,255,255)"}}/>,
         path: "/category",
       },
       
       {
         text: "Manage Categories",
-        icon: <Sort />,
+        icon: <Sort sx={{color: "rgb(255,255,255)"}}/>,
         path: "/managecategories",
       },
     ],
   },
   {
     text: "Posts",
-    icon: <Camera />,
+    icon: <Camera sx={{color: "rgb(255,255,255)"}} />,
     path: "/posts",
     subitems: [
       {
         text: "View",
-        icon: <ViewList/>,
+        icon: <ViewList sx={{color: "rgb(255,255,255)"}}/>,
         path: "/viewpost",
       },
       {
         text: "Create Post",
-        icon: <PostAdd />,
+        icon: <PostAdd sx={{color: "rgb(255,255,255)"}}/>,
         path: "/createpost",
       },
       {
         text: "Manage Posts",
-        icon: <EditIcon />,
+        icon: <EditIcon sx={{color: "rgb(255,255,255)"}}/>,
         path: "/manageposts",
       },
     ],
   },
   {
     text: "Users",
-    icon: <AdminPanelSettings />,
+    icon: <AdminPanelSettings sx={{color: "rgb(255,255,255)"}}/>,
     path: "/users",
     subitems: [
       {
-        text: "Add Products",
-        icon: <AddCircleOutlineIcon/>,
-        path: "/addproducts",
+        text: "Create Account",
+        icon: <AddCircleOutlineIcon sx={{color: "rgb(255,255,255)"}}/>,
+        path: "/addusers",
       },
       {
-        text: "View Products",
-        icon: <VisibilityIcon/>,
-        path: "/viewproducts",
+        text: "View Users",
+        icon: <VisibilityIcon sx={{color: "rgb(255,255,255)"}}/>,
+        path: "/viewusers",
       },
     ],
   },
   {
     text: "Settings",
-    icon: <Settings />,
+    icon: <Settings sx={{color: "rgb(255,255,255)"}}/>,
     path: "/settings",
   },
 ];
@@ -132,6 +133,9 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  backgroundColor: "rgb(48,48,48)",
+  color: "rgb(255,255,255)",
+
 });
 
 const closedMixin = (theme) => ({
@@ -139,6 +143,9 @@ const closedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: "rgb(48,48,48)",
+  color: "rgb(255,255,255)",
+
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {

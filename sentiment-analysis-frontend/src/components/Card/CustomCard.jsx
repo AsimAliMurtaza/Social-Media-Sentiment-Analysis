@@ -13,8 +13,8 @@ function CustomCard({ inputForm, isFormVisible }) {
         <CardContent>
           {/* Wrap inputForm with Slide component */}
           <Slide direction="down" in={isFormVisible} timeout={500}>
-  {inputForm}
-    </Slide>
+            {inputForm}
+          </Slide>
         </CardContent>
       </Card>
     </Box>
