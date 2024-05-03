@@ -41,7 +41,7 @@ const items = [
   {
     text: "Products",
     icon: <ShoppingCart />,
-    path: "/posts",
+    path: "/products",
     subitems: [
       {
         text: "Add Products",
@@ -86,6 +86,17 @@ const items = [
     text: "Users",
     icon: <AdminPanelSettings />,
     path: "/users",
+    subitems: [
+      {
+        text: "Add Products",
+        icon: <AddCircleOutlineIcon/>,
+        path: "/addproducts",
+      },
+      {
+        text: "View Products",
+        icon: <VisibilityIcon/>,
+        path: "/viewproducts",
+      },
   },
   {
     text: "Settings",

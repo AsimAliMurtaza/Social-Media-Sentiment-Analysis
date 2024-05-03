@@ -8,6 +8,7 @@ import InputFormCategory from "../components/InputForm/InputFormCategory";
 import List from "../components/ListItem/ListItem";
 import { useState } from "react";
 import ProductInputForm from "../components/InputForm/InputFormProducts";
+import { ViewCarousel } from "@mui/icons-material";
 
 export default function ProductPage() {
 
