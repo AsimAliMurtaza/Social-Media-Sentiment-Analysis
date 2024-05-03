@@ -17,7 +17,6 @@ export default function ProductSubPage() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <CustomCard inputForm={<ProductInputForm />} />
-              <CustomCard inputForm={<ProductInputForm />} />
             </Grid>
           </Grid>
         </Box>

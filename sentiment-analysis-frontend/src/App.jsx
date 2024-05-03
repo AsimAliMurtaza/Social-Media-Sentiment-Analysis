@@ -9,13 +9,15 @@ import UsersPage from "./routes/UsersPage.jsx";
 import ProductCategoryForm from "./routes/CategoryPage2.jsx";
 import ViewPost from "./routes/ViewPost.jsx";
 import PostsPage from "./routes/PostsPage.jsx";
+import ProductSubPage from "./routes/ProductsSubPage.jsx";
 function App() {
   return (
     <Fragment>
       <NextUIProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<ProductPage />} />
+            <Route path="/viewproducts" element={<ProductPage />} />
+            <Route path="/addproducts" element={<ProductSubPage />} />
             <Route path="/category" element={<CategoryPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/select-category" element={<ProductCategoryForm />} />

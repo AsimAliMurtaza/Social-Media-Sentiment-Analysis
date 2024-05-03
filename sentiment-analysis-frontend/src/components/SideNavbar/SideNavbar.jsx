@@ -41,7 +41,19 @@ const items = [
   {
     text: "Products",
     icon: <ShoppingCart />,
-    path: "/",
+    path: "/posts",
+    subitems: [
+      {
+        text: "Add Products",
+        icon: <AddCircleOutlineIcon/>,
+        path: "/addproducts",
+      },
+      {
+        text: "View Products",
+        icon: <VisibilityIcon/>,
+        path: "/viewproducts",
+      },
+    ]
   },
   {
     text: "Category",
