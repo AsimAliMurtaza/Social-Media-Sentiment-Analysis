@@ -7,7 +7,6 @@ import CustomCard from "../components/Card/CustomCard";
 import ProductInputForm from "../components/InputForm/InputFormProducts";
 
 export default function ProductSubPage() {
-
   return (
     <>
       <div className="body-container">
@@ -17,6 +16,7 @@ export default function ProductSubPage() {
           <SideNavbar />
           <Grid container spacing={2}>
             <Grid item xs={12}>
+              <CustomCard inputForm={<ProductInputForm />} />
               <CustomCard inputForm={<ProductInputForm />} />
             </Grid>
           </Grid>
