@@ -4,9 +4,7 @@ import { Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import CreatePost from "../components/Post/CreatePost";
-import PostForm from "../components/InputForm/PostForm";
-
+import PostForm from "../components/InputForm/PostForm"
 export default function PostsPage() {
   const features = {
     heading: "Create Posts",
