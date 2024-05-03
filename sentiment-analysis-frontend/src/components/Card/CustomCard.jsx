@@ -9,7 +9,7 @@ import "../../routes/Dashboard.css";
 function CustomCard({ inputForm }) {
   return (
     <Box component="main" sx={{ flexGrow: 1, p: 2 }}>
-      <Card sx={{ height: "60vh", overflow: "auto", padding: "10px" }}>
+      <Card sx={{ height: "89vh", overflow: "auto", padding: "10px" }}>
         <CardContent>{inputForm}</CardContent>
       </Card>
     </Box>

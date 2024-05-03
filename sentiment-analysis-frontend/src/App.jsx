@@ -9,6 +9,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import UsersPage from "./routes/UsersPage.jsx";
 import ProductCategoryForm from "./routes/CategoryPage2.jsx";
 import Createpost from './routes/PostsPage.jsx'
+import ProductSubPage from "./routes/ProductsSubPage.jsx"
 
 
 function App() {
@@ -18,12 +19,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ProductPage />} />
+            <Route path= "/addproducts" element={<ProductSubPage/>}/>
             <Route path="/category" element={<CategoryPage />} />
-          
             <Route path="/users" element={<UsersPage />} />
             <Route path="/select-category" element={<ProductCategoryForm />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/posts" element={<Createpost />} />
+            <Route path="/posts" element={<PostsPage />} />
           </Routes>
         </BrowserRouter>
       </NextUIProvider>

@@ -1,6 +1,7 @@
 import React from "react";
 import "../../routes/Dashboard.css"; // Import CSS file for styling
 import EditProductForm from "../InputForm/InputFormEditProduct"; // Import the EditProductForm component
+import { Delete, Edit } from "@mui/icons-material";
 
 const ListItem = ({ item, onEdit, onDelete }) => {
   return (
@@ -9,10 +10,10 @@ const ListItem = ({ item, onEdit, onDelete }) => {
         {item.name} - {item.description}
       </span>
       <button className="edit-button" onClick={() => onEdit(item)}>
-        Edit
+        <Edit/>
       </button>
       <button className="delete-button" onClick={() => onDelete(item.id)}>
-        Delete
+        <Delete/>
       </button>
     </li>
   );
