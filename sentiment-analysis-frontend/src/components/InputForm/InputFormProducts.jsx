@@ -1,36 +1,43 @@
-import * as React from "react";
-import { useState } from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import { useNavigate } from "react-router";
 
 export default function ProductInputForm() {
   const [productData, setProductData] = useState({
     productName: "",
     category: "",
-    customCategory: "", // Added state for custom category
+    customCategory: "",
   });
-  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
 
-  const [categories] = useState([
-    "Dairy Cream",
-    "Powdered Milk",
-    "Nutritional Drinks",
-    "Fruita Vitals Juice",
-    "Nesfruita Juice",
-    "Milo",
-    "Cerelac",
-    "Nido",
-    "Nescafe",
-    "Mineral Water",
-    "Cereal",
-  ]);
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/viewcategories"
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+          console.log("Categories fetched successfully:", data);
+        } else {
+          throw new Error("Failed to fetch categories");
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   const handleProductChange = (event) => {
     const { value } = event.target;
@@ -46,16 +53,46 @@ export default function ProductInputForm() {
     setProductData({ ...productData, customCategory: value });
   };
 
-  const handleProductSubmit = (event) => {
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle submission logic here
-    console.log(productData);
-    navigate("/"); // Redirect to home page
+    try {
+      const response = await fetch("http://localhost:5000/api/createproducts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productData),
+      });
+      if (response.ok) {
+        console.log("Data sent successfully");
+        setProductData({
+          productName: "",
+          category: "",
+          customCategory: "",
+        });
+        setError("");
+      } else {
+        const responseData = await response.json();
+        if (
+          responseData.error &&
+          responseData.error.includes("duplicate key")
+        ) {
+          setError("This Product already exists!");
+        } else {
+          setError("Error sending data");
+        }
+      }
+    } catch (error) {
+      setError("Error sending data");
+      console.error("Error sending data:", error);
+    }
   };
 
   return (
     <div>
-      <form onSubmit={handleProductSubmit}>
+      <form onSubmit={handleSubmit}>
         <div style={{ textAlign: "Left", marginBottom: "1rem" }}>
           <h1>Enter Product</h1>
         </div>
@@ -71,21 +108,21 @@ export default function ProductInputForm() {
             fullWidth
           />
         </FormControl>
-        <FormControl fullWidth sx={{ marginBottom: "1rem" }}>
+        <FormControl fullWidth margin="normal">
           <InputLabel id="demo-simple-select-label">Category</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={productData.category}
-            label="Category"
+            value={productData.ProductCategory}
             onChange={handleProductChange}
+            name="category"
           >
+            {console.log(categories)}
             {categories.map((category) => (
               <MenuItem key={category} value={category}>
-                {category}
+                {category.CategoryName}
               </MenuItem>
             ))}
-            <MenuItem value="Other">Other</MenuItem>
           </Select>
         </FormControl>
         {/* Text field for entering custom category */}

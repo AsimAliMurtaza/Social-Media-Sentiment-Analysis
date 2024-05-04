@@ -9,27 +9,29 @@ import List from "../components/ListItem/ListItem";
 import { useState } from "react";
 import ProductInputForm from "../components/InputForm/InputFormProducts";
 import { ViewCarousel } from "@mui/icons-material";
+import { useEffect } from "react";
 
 export default function ProductPage() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const response = await fetch("http://localhost:5000/api/products");
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+          console.log("Products fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+    fetchProducts();
+  }, []);
 
 
-  const [items, setItems] = useState([
-    { id: 1, name: "Item 1", description: "Description 1" },
-    { id: 2, name: "Item 2", description: "Description 2" },
-    { id: 3, name: "Item 3", description: "Description 3" },
-    { id: 1, name: "Item 1", description: "Description 1" },
-    { id: 2, name: "Item 2", description: "Description 2" },
-    { id: 3, name: "Item 3", description: "Description 3" },
-    { id: 1, name: "Item 1", description: "Description 1" },
-    { id: 2, name: "Item 2", description: "Description 2" },
-    { id: 3, name: "Item 3", description: "Description 3" },
-    { id: 1, name: "Item 1", description: "Description 1" },
-    { id: 2, name: "Item 2", description: "Description 2" },
-    { id: 3, name: "Item 3", description: "Description 3" },
-    { id: 1, name: "Item 1", description: "Description 1" },
-    { id: 2, name: "Item 2", description: "Description 2" },
-    { id: 3, name: "Item 3", description: "Description 3" },
-  ]);
 
   return (
     <>
@@ -37,10 +39,12 @@ export default function ProductPage() {
         <Navbar />
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%", marginRight: "0%" }}>
-          <SideNavbar /> 
+          <SideNavbar />
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <CustomCard inputForm={<List items={items} title={"Manage Products"} />} />
+              <CustomCard 
+                inputForm={<List items={products} title={"Manage Products"} />}
+              />
             </Grid>
           </Grid>
         </Box>

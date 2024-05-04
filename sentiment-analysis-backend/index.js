@@ -2,9 +2,10 @@ const express = require("express");
 const mssql = require("mssql/msnodesqlv8");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
 const app = express();
 
+const { ViewProducts, EditProduct, DeleteProduct, CreateProduct } = require("./crud/ProductsCRUD");
+const { ViewCategory } = require("./crud/CategoryCrud");
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -29,6 +30,14 @@ mssql
   .connect(config)
   .then(() => console.log("Connected to database"))
   .catch((err) => console.error("Error connecting to database:", err));
+
+// Route to view products
+app.get("/api/products", ViewProducts);
+app.post("/api/editproducts", EditProduct);
+app.post("/api/createproducts", CreateProduct);
+app.get("/api/viewcategories", ViewCategory);
+app.post("/api/deleteproducts", DeleteProduct);
+
 
 // Route to fetch products
 app.get("/get-products", async (req, res) => {

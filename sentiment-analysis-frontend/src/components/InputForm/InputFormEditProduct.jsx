@@ -11,38 +11,75 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
-const EditProductForm = ({ open, onClose, product, onSave }) => {
-  const [editedProduct, setEditedProduct] = useState({ ...product });
-  const navigate = useNavigate();
-
+const EditProductForm = ({ open, onClose, product }) => {
+  const [formData, setFormData] = useState({ ...product });
+  const [error, setError] = useState("");
+  const [categories, setCategories] = useState([]);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditedProduct((prevProduct) => ({
+    setFormData((prevProduct) => ({
       ...prevProduct,
       [name]: value,
     }));
   };
+  const handleSave = async (event) => {
+    event.preventDefault();
+    setFormData((prevData) => ({
+      ...prevData,
+    }));
 
-  const handleSave = () => {
-    onSave(editedProduct);
-    onClose();
+    try {
+      const response = await fetch("http://localhost:5000/api/editproducts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        console.log("Data sent successfully");
+        onClose();
+        setFormData({
+          ProductID: "",
+          ProductName: "",
+          ProductCategory: "",
+        });
+        setError("");
+      } else {
+        const responseData = await response.json();
+        if (
+          responseData.error &&
+          responseData.error.includes("duplicate key")
+        ) {
+          setError("This Product already exists!");
+        } else {
+          setError("This Product already exists!");
+        }
+      }
+    } catch (error) {
+      setError("Error sending data");
+      console.error("Error sending data:", error);
+    }
   };
-
-  const [categories] = useState([
-    "Dairy Cream",
-    "Powdered Milk",
-    "Nutritional Drinks",
-    "Fruita Vitals Juice",
-    "Nesfruita Juice",
-    "Milo",
-    "Cerelac",
-    "Nido",
-    "Nescafe",
-    "Mineral Water",
-    "Cereal",
-  ]);
+  useEffect(() => {
+    async function fetchCategory() {
+      try {
+        const response = await fetch("http://localhost:5000/api/viewcategories");
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+          console.log("Products fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    }
+    fetchCategory();
+  }, []);
 
   return (
     <Dialog open={open} onClose={onClose}>
@@ -51,8 +88,8 @@ const EditProductForm = ({ open, onClose, product, onSave }) => {
         <TextField
           fullWidth
           label="Product Name"
-          name="name"
-          value={editedProduct.name}
+          name="ProductName"
+          value={formData.ProductName}
           onChange={handleChange}
           margin="normal"
         />
@@ -61,13 +98,13 @@ const EditProductForm = ({ open, onClose, product, onSave }) => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={editedProduct.category}
+            value={formData.ProductCategory}
             onChange={handleChange}
             name="category"
           >
             {categories.map((category) => (
               <MenuItem key={category} value={category}>
-                {category}
+                {category.CategoryName}
               </MenuItem>
             ))}
           </Select>
