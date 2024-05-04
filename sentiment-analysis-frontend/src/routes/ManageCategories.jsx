@@ -7,18 +7,31 @@ import CustomCard from "../components/Card/CustomCard";
 import InputFormCategory from "../components/InputForm/InputFormCategory";
 import List from "../components/ListItem/ListItem";
 import { useState } from "react";
-import ProductInputForm from "../components/InputForm/InputFormProducts";
-import { Description } from "@mui/icons-material";
+import ListCategories from "../components/ListItem/ListCategory";
 import Slide from "@mui/material/Slide";
+import { useEffect } from "react";
 
 export default function Categories() {
-  const [categories, setcategories] = useState([
-    { id: 1, name: "Category 1", description: "Content 1" },
-    { id: 2, name: "Category 2", description: "Content 2" },
-    { id: 3, name: "Category 3", description: "Content 3" },
-    { id: 4, name: "Category 4", description: "Content 4" },
-    { id: 5, name: "Category 5", description: "Content 5" },
-  ]);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    async function fetchCategory() {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/viewcategories"
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setCategories(data);
+          console.log("Categories fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching Categories:", error);
+      }
+    }
+    fetchCategory();
+  }, []);
 
   return (
     <>
@@ -32,7 +45,10 @@ export default function Categories() {
               <Slide direction="down">
                 <CustomCard
                   inputForm={
-                    <List items={categories} title={"Manage Categories"} />
+                    <ListCategories
+                      items={categories}
+                      title={"Manage Categories"}
+                    />
                   }
                 />
               </Slide>

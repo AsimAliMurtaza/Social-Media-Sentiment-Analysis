@@ -1,89 +1,58 @@
-import * as React from "react";
-import { useState } from "react";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router";
-import Box from "@mui/material/Box";
+import React, { useState } from "react";
+import { Button, TextField, Box } from "@mui/material";
 
 function InputFormCategory() {
-  const [productData, setProductData] = useState({
-    category: "",
-    customCategory: "", // Added state for custom category
-  });
-  const navigate = useNavigate();
+  const [customCategory, setCustomCategory] = useState("");
+  const [error, setError] = useState("");
 
-  const [categories] = useState([
-    "Dairy Cream",
-    "Powdered Milk",
-    "Nutritional Drinks",
-    "Fruita Vitals Juice",
-    "Nesfruita Juice",
-    "Milo",
-    "Cerelac",
-    "Nido",
-    "Nescafe",
-    "Mineral Water",
-    "Cereal",
-  ]);
-
-  const handleProductChange = (event) => {
-    const { value } = event.target;
-    if (value === "Other") {
-      setProductData({ ...productData, category: value });
-    } else {
-      setProductData({ ...productData, category: value, customCategory: "" });
-    }
-  };
-
-  const handleCustomCategoryChange = (event) => {
-    const { value } = event.target;
-    setProductData({ ...productData, customCategory: value });
-  };
-
-  const handleProductSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle submission logic here
-    console.log(productData);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/createcategories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ customCategory }), // Sending only customCategory to the backend
+      });
+      if (response.ok) {
+        console.log("Data sent successfully");
+        setCustomCategory(""); // Clear the text field after successful submission
+        setError(""); // Clear any previous error message
+      } else {
+        const responseData = await response.json();
+        if (
+          responseData.error &&
+          responseData.error.includes("duplicate key")
+        ) {
+          setError("This Category already exists!");
+        } else {
+          setError("Error sending data");
+        }
+      }
+    } catch (error) {
+      setError("Error sending data");
+      console.error("Error sending data:", error);
+    }
   };
 
   return (
     <Box sx={{ width: "100%" }}>
-      <form onSubmit={handleProductSubmit}>
-        <h1>Add Category</h1>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={productData.category}
-            label="Category"
-            onChange={handleProductChange}
-            sx={{ marginBottom: 6 }}
-          >
-            {categories.map((category) => (
-              <MenuItem key={category} value={category}>
-                {category}
-              </MenuItem>
-            ))}
-            <MenuItem value="Other">Other</MenuItem> {/* Manual entry option */}
-          </Select>
-        </FormControl>
-        {/* Text field for entering custom category */}
-        {productData.category === "Other" && (
-          <TextField
-            id="custom-category"
-            label="Enter Category"
-            variant="outlined"
-            fullWidth
-            value={productData.customCategory}
-            onChange={handleCustomCategoryChange}
-            sx={{ marginBottom: 4 }}
-          />
-        )}
+      <form onSubmit={handleSubmit}>
+        <h2>Add Category</h2>
+        {/* Text field for entering category */}
+        <TextField
+          id="category"
+          label="Category"
+          variant="outlined"
+          fullWidth
+          value={customCategory}
+          onChange={(e) => setCustomCategory(e.target.value)} // Update customCategory state
+          error={Boolean(error)}
+          helperText={error}
+          sx={{ marginBottom: 4 }}
+        />
         <Button
           type="submit"
           variant="contained"

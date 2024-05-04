@@ -7,7 +7,7 @@ const ListUser = ({ item, onEdit, onDelete }) => {
   return (
     <li className="list-item">
       <span className="item-details">
-        {item.name} - {item.email} - {item.gender}
+        {item.UserName} - {item.Email} - {item.LookUpName}
       </span>
       <button className="edit-button" onClick={() => onEdit(item)}>
         <Edit/>

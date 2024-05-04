@@ -117,7 +117,6 @@ export default function ProductInputForm() {
             onChange={handleProductChange}
             name="category"
           >
-            {console.log(categories)}
             {categories.map((category) => (
               <MenuItem key={category} value={category}>
                 {category.CategoryName}

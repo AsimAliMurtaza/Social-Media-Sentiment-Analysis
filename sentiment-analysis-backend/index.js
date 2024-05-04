@@ -5,7 +5,9 @@ const bodyParser = require("body-parser");
 const app = express();
 
 const { ViewProducts, EditProduct, DeleteProduct, CreateProduct } = require("./crud/ProductsCRUD");
-const { ViewCategory } = require("./crud/CategoryCrud");
+const { ViewCategory, CreateCategory, DeleteCategory, EditCategory } = require("./crud/CategoryCrud");
+const { ViewUsers, EditUser, DeleteUser, CreateUser } = require("./crud/UsersCRUD");
+
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -35,8 +37,16 @@ mssql
 app.get("/api/products", ViewProducts);
 app.post("/api/editproducts", EditProduct);
 app.post("/api/createproducts", CreateProduct);
-app.get("/api/viewcategories", ViewCategory);
 app.post("/api/deleteproducts", DeleteProduct);
+
+app.get("/api/viewcategories", ViewCategory);
+app.post("/api/createcategories", CreateCategory);
+app.post("/api/deletecategories", DeleteCategory);
+app.post("/api/editcategories", EditCategory);
+
+app.get("/api/viewusers", ViewUsers);
+
+
 
 
 // Route to fetch products

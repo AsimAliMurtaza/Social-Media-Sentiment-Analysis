@@ -9,22 +9,28 @@ import ListUsers from "../components/ListItem/ListUser";
 import { useState } from "react";
 import ProductInputForm from "../components/InputForm/InputFormProducts";
 import { ViewCarousel } from "@mui/icons-material";
+import { useEffect } from "react";
 
 export default function ViewUsers() {
 
+  const [users, setUsers] = useState([]);
 
-  const [users, setUsers] = useState([
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-    { id: 1, name: "User 1", email: "johndoe@example.com", gender: "Male" },
-
-
-  ]);
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const response = await fetch("http://localhost:5000/api/viewusers");
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data);
+          console.log("users fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    }
+    fetchUsers();
+  }, []);
 
   return (
     <>
