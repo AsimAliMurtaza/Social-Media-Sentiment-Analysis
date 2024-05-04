@@ -9,10 +9,7 @@ import UserForm from "../components/InputForm/InputFormUser";
 import { ViewComfyAltOutlined } from "@mui/icons-material";
 
 export default function AddUsers() {
-  const features = {
-    heading: "Create Posts",
-    description: "Add, edit, and delete posts in the database.",
-  };
+
 
   return (
     <>

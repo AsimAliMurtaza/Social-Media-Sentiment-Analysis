@@ -5,13 +5,8 @@ import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
 
-export default function ProductPage() {
-  const features = [
-    {
-      heading: "Manage Users",
-      description: "Add, edit, and delete users in the database.",
-    },
-  ];
+export default function UsersPage() {
+
 
   return (
     <>
@@ -20,7 +15,6 @@ export default function ProductPage() {
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%" }}>
           <SideNavbar />
-          <CustomCard features={features}/>
         </Box>
       </div>
     </>

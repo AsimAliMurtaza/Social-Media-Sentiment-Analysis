@@ -54,7 +54,7 @@ exports.EditCategory = async (req, res) => {
     const result2 = await request.query(
       `
         UPDATE Category SET CategoryName = '${CategoryName}' WHERE CategoryID = '${CategoryID}'
-      `,
+      `
     );
     res.json({ message: "Category updated" });
   } catch (error) {

@@ -15,7 +15,6 @@ exports.ViewProducts = async (req, res) => {
   }
 };
 
-
 exports.EditProduct = async (req, res) => {
   const { ProductID, ProductName, category } = req.body;
   const newCategoryName = category.CategoryName;
@@ -33,7 +32,7 @@ exports.EditProduct = async (req, res) => {
     console.error("Error updating product:", error);
     res.status(500).json({ error: "Error updating product" });
   }
-}
+};
 
 exports.CreateProduct = async (req, res) => {
   const { productName, category } = req.body;
@@ -49,17 +48,16 @@ exports.CreateProduct = async (req, res) => {
     console.error("Error added product:", error);
     res.status(500).json({ error: "Error adding product" });
   }
-}
-
+};
 
 exports.DeleteProduct = async (req, res) => {
   const { ProductID } = req.body;
-  console.log(req)
+  console.log(req);
   try {
     const request = new mssql.Request();
     const query = await request.query(`
         UPDATE POST SET ProductID=19032 WHERE ProductID=${ProductID}
-    `); 
+    `);
     const result = await request.query(`
       Delete from Product where ProductID = '${ProductID}'
     `);
@@ -68,4 +66,4 @@ exports.DeleteProduct = async (req, res) => {
     console.error("Error deleting product:", error);
     res.status(500).json({ error: "Error deleting product" });
   }
-} 
+};

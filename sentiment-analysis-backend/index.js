@@ -33,7 +33,7 @@ mssql
   .then(() => console.log("Connected to database"))
   .catch((err) => console.error("Error connecting to database:", err));
 
-// Route to view products
+// Routes
 app.get("/api/products", ViewProducts);
 app.post("/api/editproducts", EditProduct);
 app.post("/api/createproducts", CreateProduct);
@@ -45,52 +45,12 @@ app.post("/api/deletecategories", DeleteCategory);
 app.post("/api/editcategories", EditCategory);
 
 app.get("/api/viewusers", ViewUsers);
+app.post("/api/createusers", CreateUser);
+app.post("/api/deleteusers", DeleteUser);
+app.post("/api/editusers", EditUser);
 
 
 
-
-// Route to fetch products
-app.get("/get-products", async (req, res) => {
-  try {
-    const request = new mssql.Request();
-    const result = await request.query(
-      "select top(2) ProductName, ProductID from Product"
-    );
-    res.json(result.recordset);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// Route to fetch products by category
-app.get("/products", async (req, res) => {
-  const { category } = req.query;
-
-  try {
-    const request = new mssql.Request();
-    const result = await request.query(
-      `SELECT * FROM Products WHERE Category = '${category}'`
-    );
-    const products = result.recordset;
-    res.json(products);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// Route to fetch categories
-app.get("/get-categories", async (req, res) => {
-  try {
-    const request = new mssql.Request();
-    const result = await request.query("select CategoryName from Category");
-    res.json(result.recordset);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
 
 // Route to handle sign-up/ CREATE operation
 app.post("/fb-form-signup", async (req, res) => {
@@ -128,25 +88,6 @@ app.post("/fb-form-signup", async (req, res) => {
   }
 });
 
-app.post("/fb-form-addproducts", (req, res) => {
-  // Insert category into the categories table
-  request
-    .query(
-      `INSERT INTO Category (CategoryName)
-                VALUES ('${category}')`
-    )
-    .then(() => console.log("Category inserted successfully"))
-    .catch((err) => console.error("Error inserting category:", err));
-
-  // Insert product details into the products table
-  request
-    .query(
-      `INSERT INTO Product (ProductName, CategoryId)
-                VALUES ('${productName}', (SELECT CategoryId FROM Category WHERE CategoryName = '${category}'))`
-    )
-    .then(() => console.log("Product data inserted successfully"))
-    .catch((err) => console.error("Error inserting product data:", err));
-});
 
 // Route to handle login/ READ operation
 app.post("/fb-form-login", (req, res) => {
