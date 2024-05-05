@@ -7,6 +7,8 @@ const app = express();
 const { ViewProducts, EditProduct, DeleteProduct, CreateProduct } = require("./crud/ProductsCRUD");
 const { ViewCategory, CreateCategory, DeleteCategory, EditCategory } = require("./crud/CategoryCrud");
 const { ViewUsers, EditUser, DeleteUser, CreateUser } = require("./crud/UsersCRUD");
+const { ViewPost, DeletePost, EditPost, CreatePost} = require("./crud/PostsCRUD")
+
 
 app.use(
   cors({
@@ -49,6 +51,10 @@ app.post("/api/createusers", CreateUser);
 app.post("/api/deleteusers", DeleteUser);
 app.post("/api/editusers", EditUser);
 
+app.get("/api/viewposts", ViewPost);
+app.post("/api/deleteposts", DeletePost);
+app.post("/api/editposts", EditPost);
+app.post("/api/createposts", CreatePost);
 
 
 

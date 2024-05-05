@@ -5,7 +5,7 @@ exports.ViewProducts = async (req, res) => {
     const result = await mssql.query(`
       SELECT p.ProductID, p.ProductName, c.CategoryName
       FROM Product p
-      JOIN Category c ON p.CategoryID = c.CategoryID;
+      JOIN Category c ON p.CategoryID = c.CategoryID where p.ProductID != 19032;
     `);
     res.json(result.recordset);
     console.log("ViewProducts", result.recordset);

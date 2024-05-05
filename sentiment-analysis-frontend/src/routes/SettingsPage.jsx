@@ -4,6 +4,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar.jsx";
 
 import { useState } from "react";
+import CustomCard from "../components/Card/CustomCard.jsx";
 
 const Settings = () => {
   // Example state for account information

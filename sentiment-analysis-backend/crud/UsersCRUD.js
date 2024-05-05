@@ -3,7 +3,7 @@ const mssql = require("mssql/msnodesqlv8");
 exports.ViewUsers = async (req, res) => {
   try {
     const result = await mssql.query(`
-      SELECT EngagerID, Engager.UserName, Engager.Email, LookUp.LookUpName
+      SELECT top(50) EngagerID, Engager.UserName, Engager.Email, LookUp.LookUpName
       FROM Engager
       INNER JOIN LookUp ON Engager.Gender = LookUp.LookUpID;
     `);

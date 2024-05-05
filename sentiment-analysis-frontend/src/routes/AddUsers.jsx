@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import PostForm from "../components/InputForm/PostForm";
+import PostForm from "../components/InputForm/InputFormPost";
 import UserForm from "../components/InputForm/InputFormUser";
 import { ViewComfyAltOutlined } from "@mui/icons-material";
 

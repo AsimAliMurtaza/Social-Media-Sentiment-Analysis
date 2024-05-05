@@ -18,6 +18,7 @@ const EditCategoryForm = ({ open, onClose, product }) => {
       [name]: value,
     }));
   };
+  
   const handleSave = async (event) => {
     event.preventDefault();
     try {

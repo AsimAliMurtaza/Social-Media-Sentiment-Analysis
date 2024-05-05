@@ -4,12 +4,32 @@ import { Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputViewPosts from "../components/InputForm/InputViewPosts"
+import ListPost from "../components/ListItem/ListPost"
+import { useState, useEffect } from "react";
+
+
 export default function PostsPage() {
-  const features = {
-    heading: "Create Posts",
-    description: "Add, edit, and delete posts in the database.",
-  }
+
+  
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const response = await fetch("http://localhost:5000/api/viewposts");
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+          console.log("posts fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    }
+    fetchUsers();
+  }, []);
+
 
   return (
     <>
@@ -18,7 +38,7 @@ export default function PostsPage() {
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%" }}>
           <SideNavbar />
-            <CustomCard inputForm={<InputViewPosts/>}/>
+            <CustomCard inputForm={<ListPost posts={posts} />}/>
 
         </Box>
       </div>
