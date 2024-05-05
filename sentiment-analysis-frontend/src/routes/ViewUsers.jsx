@@ -4,15 +4,11 @@ import { Box, Grid } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputFormCategory from "../components/InputForm/InputFormCategory";
 import ListUsers from "../components/ListItem/ListUser";
 import { useState } from "react";
-import ProductInputForm from "../components/InputForm/InputFormProducts";
-import { ViewCarousel } from "@mui/icons-material";
 import { useEffect } from "react";
 
 export default function ViewUsers() {
-
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -41,7 +37,9 @@ export default function ViewUsers() {
           <SideNavbar />
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <CustomCard inputForm={<ListUsers items={users} title={"View Users"} />} />
+              <CustomCard
+                inputForm={<ListUsers items={users} title={"View Users"} />}
+              />
             </Grid>
           </Grid>
         </Box>

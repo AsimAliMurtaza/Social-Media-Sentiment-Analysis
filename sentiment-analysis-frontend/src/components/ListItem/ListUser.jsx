@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../../routes/Dashboard.css"; // Import CSS file for styling
-import EditProductForm from "../InputForm/InputFormEditProduct"; // Import the EditProductForm component
 import { Delete, Edit } from "@mui/icons-material";
 import EditUserForm from "../InputForm/InputEditUsers"; // Import the EditUserForm component
 

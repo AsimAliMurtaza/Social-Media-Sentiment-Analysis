@@ -50,18 +50,17 @@ exports.DeleteUser = async (req, res) => {
 };
 
 exports.EditUser = async (req, res) => {
-    const { EngagerID, UserName, Email, Gender } = req.body;
-    console.log("EditUser", req.body);
-    try {
-      const request = new mssql.Request();
-      const result = await request.query(`
+  const { EngagerID, UserName, Email, Gender } = req.body;
+  console.log("EditUser", req.body);
+  try {
+    const request = new mssql.Request();
+    const result = await request.query(`
           Update Engager set UserName = '${UserName}', Email = '${Email}', 
           Gender = (SELECT LookUpID FROM LookUp WHERE LookUpName = '${Gender}') where EngagerID = '${EngagerID}'
           `);
-      res.json({ message: "User updated" });
-    } catch (error) {
-      console.error("Error updating user:", error);
-      res.status(500).json({ error: "Error updating user" });
-    }
-  };
-  
+    res.json({ message: "User updated" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Error updating user" });
+  }
+};

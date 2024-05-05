@@ -1,14 +1,7 @@
-import React, { useState } from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-} from "@mui/material";
+import React from "react";
+import { List, ListItem, ListItemText, Divider } from "@mui/material";
 
-function ListPost({posts}) {
-
+function ListPost({ posts }) {
   return (
     <div>
       <h1>View Posts</h1>
@@ -16,7 +9,10 @@ function ListPost({posts}) {
         {posts.map((post) => (
           <div key={post.PostID}>
             <ListItem alignItems="flex-start">
-              <ListItemText primary={"Post " + post.PostID} secondary={post.PostContent} />
+              <ListItemText
+                primary={"Post " + post.PostID}
+                secondary={post.PostContent}
+              />
             </ListItem>
             <Divider />
           </div>

@@ -4,7 +4,6 @@ import EditPostsForm from "../InputForm/InputEditPosts"; // Import the EditProdu
 import { Delete, Edit } from "@mui/icons-material";
 
 const ListItem = ({ item, onEdit, onDelete }) => {
-  
   return (
     <li className="list-item">
       <span className="item-details">
@@ -13,14 +12,12 @@ const ListItem = ({ item, onEdit, onDelete }) => {
       <button className="edit-button" onClick={() => onEdit(item)}>
         <Edit />
       </button>
-      <button className="delete-button" onClick={()=> onDelete(item.PostID)}>
+      <button className="delete-button" onClick={() => onDelete(item.PostID)}>
         <Delete />
       </button>
     </li>
   );
 };
-
-
 
 const ListPostWithEdit = ({ items, title, onEdit }) => {
   const [editItem, setEditItem] = useState(null);

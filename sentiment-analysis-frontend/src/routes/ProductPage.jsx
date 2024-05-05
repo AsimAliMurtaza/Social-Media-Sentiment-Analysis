@@ -4,11 +4,8 @@ import { Box, Grid } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputFormCategory from "../components/InputForm/InputFormCategory";
 import List from "../components/ListItem/ListItem";
 import { useState } from "react";
-import ProductInputForm from "../components/InputForm/InputFormProducts";
-import { ViewCarousel } from "@mui/icons-material";
 import { useEffect } from "react";
 
 export default function ProductPage() {
@@ -31,8 +28,6 @@ export default function ProductPage() {
     fetchProducts();
   }, []);
 
-
-
   return (
     <>
       <div className="body-container">
@@ -42,7 +37,7 @@ export default function ProductPage() {
           <SideNavbar />
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <CustomCard 
+              <CustomCard
                 inputForm={<List items={products} title={"Manage Products"} />}
               />
             </Grid>

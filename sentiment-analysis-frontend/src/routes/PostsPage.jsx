@@ -5,10 +5,7 @@ import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
 import PostForm from "../components/InputForm/InputFormPost";
-import { useEffect, useState } from "react";
 export default function PostsPage() {
-
-
   return (
     <>
       <div className="body-container">

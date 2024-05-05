@@ -4,8 +4,6 @@ import { Box, Grid } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputFormCategory from "../components/InputForm/InputFormCategory";
-import List from "../components/ListItem/ListItem";
 import { useState } from "react";
 import ListCategories from "../components/ListItem/ListCategory";
 import Slide from "@mui/material/Slide";

@@ -4,11 +4,7 @@ import { Box, Grid } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import InputFormCategory from "../components/InputForm/InputFormCategory";
-import List from "../components/ListItem/ListItem";
 import { useState, useEffect } from "react";
-import ProductInputForm from "../components/InputForm/InputFormProducts";
-import { Description } from "@mui/icons-material";
 import ListPostWithEdit from "../components/ListItem/ListPostWithEdit";
 
 export default function ManagePostPage() {
@@ -41,7 +37,9 @@ export default function ManagePostPage() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <CustomCard
-                inputForm={<ListPostWithEdit items={posts} title={"Manage Posts"} />}
+                inputForm={
+                  <ListPostWithEdit items={posts} title={"Manage Posts"} />
+                }
               />
             </Grid>
           </Grid>

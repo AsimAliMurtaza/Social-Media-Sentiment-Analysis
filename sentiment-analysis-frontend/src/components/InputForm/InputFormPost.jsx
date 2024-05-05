@@ -3,13 +3,9 @@ import {
   TextField,
   Button,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
+
   Snackbar,
 } from "@mui/material";
-import CustomCard from "../Card/CustomCard";
 
 function PostForm() {
   const [content, setContent] = useState(""); // State to track the content of the text field
@@ -84,9 +80,6 @@ function PostForm() {
     // Set the post type based on whether there are selected images
     const newPostType = selectedImages.length > 0 ? "media" : "text";
     setPostType(newPostType);
-
-    // Call handleSearchProducts to search for products in the content
-
 
     try {
       const data = {

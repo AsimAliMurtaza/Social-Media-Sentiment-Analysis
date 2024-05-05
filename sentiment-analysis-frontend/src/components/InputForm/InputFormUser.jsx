@@ -35,14 +35,11 @@ function UserForm() {
       });
       if (response.ok) {
         console.log("User created successfully");
-        // Optionally, you can redirect the user to another page or show a success message
       } else {
         console.error("Failed to create user:", response.statusText);
-        // Optionally, you can handle the error by showing an error message to the user
       }
     } catch (error) {
       console.error("Error creating user:", error);
-      // Optionally, you can handle the error by showing an error message to the user
     }
   };
 

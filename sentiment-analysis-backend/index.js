@@ -4,11 +4,30 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
 
-const { ViewProducts, EditProduct, DeleteProduct, CreateProduct } = require("./crud/ProductsCRUD");
-const { ViewCategory, CreateCategory, DeleteCategory, EditCategory } = require("./crud/CategoryCrud");
-const { ViewUsers, EditUser, DeleteUser, CreateUser } = require("./crud/UsersCRUD");
-const { ViewPost, DeletePost, EditPost, CreatePost} = require("./crud/PostsCRUD")
-
+const {
+  ViewProducts,
+  EditProduct,
+  DeleteProduct,
+  CreateProduct,
+} = require("./crud/ProductsCRUD");
+const {
+  ViewCategory,
+  CreateCategory,
+  DeleteCategory,
+  EditCategory,
+} = require("./crud/CategoryCrud");
+const {
+  ViewUsers,
+  EditUser,
+  DeleteUser,
+  CreateUser,
+} = require("./crud/UsersCRUD");
+const {
+  ViewPost,
+  DeletePost,
+  EditPost,
+  CreatePost,
+} = require("./crud/PostsCRUD");
 
 app.use(
   cors({
@@ -93,7 +112,6 @@ app.post("/fb-form-signup", async (req, res) => {
     res.status(500).send("Internal server error");
   }
 });
-
 
 // Route to handle login/ READ operation
 app.post("/fb-form-login", (req, res) => {

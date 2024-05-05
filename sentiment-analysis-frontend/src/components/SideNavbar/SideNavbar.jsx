@@ -11,13 +11,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Collapse from '@mui/material/Collapse';
-import StarBorder from '@mui/icons-material/StarBorder';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import Collapse from "@mui/material/Collapse";
+import StarBorder from "@mui/icons-material/StarBorder";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import ViewPost from "../../routes/PostsPage";
-import Slide from '@mui/material/Slide';
+import Slide from "@mui/material/Slide";
 
 import {
   AdminPanelSettings,
@@ -35,7 +35,11 @@ import {
   Create,
   Article,
   View,
-  Add,Camera,Sort,Visibility,ViewComfy
+  Add,
+  Camera,
+  Sort,
+  Visibility,
+  ViewComfy,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
@@ -45,81 +49,81 @@ import { color } from "framer-motion";
 const items = [
   {
     text: "Products",
-    icon: <ShoppingCart sx={{color: "rgb(255,255,255)"}} />,
+    icon: <ShoppingCart sx={{ color: "rgb(255,255,255)" }} />,
     path: "",
     subitems: [
       {
         text: "Add Products",
-        icon: <AddCircleOutlineIcon sx={{color: "rgb(255,255,255)"}} />,
+        icon: <AddCircleOutlineIcon sx={{ color: "rgb(255,255,255)" }} />,
         path: "/addproducts",
       },
       {
         text: "View Products",
-        icon: <ViewList sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <ViewList sx={{ color: "rgb(255,255,255)" }} />,
         path: "/viewproducts",
       },
-    ]
+    ],
   },
   {
     text: "Category",
-    icon: <Category sx={{color: "rgb(255,255,255)"}} />,
+    icon: <Category sx={{ color: "rgb(255,255,255)" }} />,
     path: "",
     subitems: [
       {
         text: "Add Category",
-        icon: <Add sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <Add sx={{ color: "rgb(255,255,255)" }} />,
         path: "/category",
       },
-      
+
       {
         text: "Manage Categories",
-        icon: <Sort sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <Sort sx={{ color: "rgb(255,255,255)" }} />,
         path: "/managecategories",
       },
     ],
   },
   {
     text: "Posts",
-    icon: <Camera sx={{color: "rgb(255,255,255)"}} />,
+    icon: <Camera sx={{ color: "rgb(255,255,255)" }} />,
     path: "/posts",
     subitems: [
       {
         text: "View",
-        icon: <ViewList sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <ViewList sx={{ color: "rgb(255,255,255)" }} />,
         path: "/viewpost",
       },
       {
         text: "Create Post",
-        icon: <PostAdd sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <PostAdd sx={{ color: "rgb(255,255,255)" }} />,
         path: "/createpost",
       },
       {
         text: "Manage Posts",
-        icon: <EditIcon sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <EditIcon sx={{ color: "rgb(255,255,255)" }} />,
         path: "/manageposts",
       },
     ],
   },
   {
     text: "Users",
-    icon: <AdminPanelSettings sx={{color: "rgb(255,255,255)"}}/>,
+    icon: <AdminPanelSettings sx={{ color: "rgb(255,255,255)" }} />,
     path: "/users",
     subitems: [
       {
         text: "Create Account",
-        icon: <AddCircleOutlineIcon sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <AddCircleOutlineIcon sx={{ color: "rgb(255,255,255)" }} />,
         path: "/addusers",
       },
       {
         text: "View Users",
-        icon: <VisibilityIcon sx={{color: "rgb(255,255,255)"}}/>,
+        icon: <VisibilityIcon sx={{ color: "rgb(255,255,255)" }} />,
         path: "/viewusers",
       },
     ],
   },
   {
     text: "Settings",
-    icon: <Settings sx={{color: "rgb(255,255,255)"}}/>,
+    icon: <Settings sx={{ color: "rgb(255,255,255)" }} />,
     path: "/settings",
   },
 ];
@@ -135,7 +139,6 @@ const openedMixin = (theme) => ({
   overflowX: "hidden",
   backgroundColor: "rgb(48,48,48)",
   color: "rgb(255,255,255)",
-
 });
 
 const closedMixin = (theme) => ({
@@ -191,7 +194,11 @@ export default function SideNavbar() {
     if (item.subitems) {
       // Toggle the open state of subitems for the clicked main item
       const isOpen = openItems.includes(item.text);
-      setOpenItems(isOpen ? openItems.filter((openItem) => openItem !== item.text) : [...openItems, item.text]);
+      setOpenItems(
+        isOpen
+          ? openItems.filter((openItem) => openItem !== item.text)
+          : [...openItems, item.text]
+      );
     } else {
       // Navigate to the path if it's not a main item with subitems
       navigate(item.path);
@@ -236,13 +243,25 @@ export default function SideNavbar() {
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary={item.text}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
               {item.subitems && (
-                <Collapse in={openItems.includes(item.text)} timeout="auto" unmountOnExit>
+                <Collapse
+                  in={openItems.includes(item.text)}
+                  timeout="auto"
+                  unmountOnExit
+                >
                   <List component="div" disablePadding>
                     {item.subitems.map((subitem) => (
-                      <Slide direction="down" in={openItems.includes(item.text)} timeout={300} key={subitem.text}>
+                      <Slide
+                        direction="down"
+                        in={openItems.includes(item.text)}
+                        timeout={300}
+                        key={subitem.text}
+                      >
                         <ListItemButton
                           key={subitem.text}
                           sx={{ pl: 4 }}

@@ -29,28 +29,27 @@ exports.EditPost = async (req, res) => {
 };
 
 exports.CreatePost = async (req, res) => {
-    const { PostContent, PostType, ProductID } = req.body;
-    console.log("post", req.body);
-  
-    // Determine the PostTypeID based on the PostType
-    const postTypeID = PostType === "text" ? 8 : 7;
-  
-    // Generate a random PlatformId between 12 and 13
-    const platformId = Math.floor(Math.random() * 2) + 12;
-  
-    try {
-      const request = new mssql.Request();
-      const result = await request.query(`
+  const { PostContent, PostType, ProductID } = req.body;
+  console.log("post", req.body);
+
+  // Determine the PostTypeID based on the PostType
+  const postTypeID = PostType === "text" ? 8 : 7;
+
+  // Generate a random PlatformId between 12 and 13
+  const platformId = Math.floor(Math.random() * 2) + 12;
+
+  try {
+    const request = new mssql.Request();
+    const result = await request.query(`
         INSERT INTO Post (PostContent, PostType, ProductID, PlatformId, PostCreated) 
         VALUES ('${PostContent}', ${postTypeID}, ${ProductID}, ${platformId}, GETDATE())
       `);
-      res.json({ message: "Post added" });
-    } catch (error) {
-      console.error("Error adding post:", error);
-      res.status(500).json({ error: "Error adding post" });
-    }
-  };
-  
+    res.json({ message: "Post added" });
+  } catch (error) {
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Error adding post" });
+  }
+};
 
 exports.DeletePost = async (req, res) => {
   const { PostID } = req.body;

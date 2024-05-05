@@ -6,17 +6,11 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControl,
 } from "@mui/material";
-import { useEffect } from "react";
 
 const EditPostsForm = ({ open, onClose, product }) => {
   const [formData, setFormData] = useState({ ...product });
   const [error, setError] = useState("");
-  const [categories, setCategories] = useState([]);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevPost) => ({

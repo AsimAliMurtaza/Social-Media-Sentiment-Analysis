@@ -1,26 +1,24 @@
 import React, { useState } from "react";
 import "../../routes/Dashboard.css"; // Import CSS file for styling
 import EditCategoryForm from "../InputForm/InputFormEditCategory";
-import { Category, Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 
 const ListCategory = ({ item, onEdit, onDelete }) => {
-  
   return (
     <li className="list-item">
-      <span className="item-details">
-        {item.CategoryName}
-      </span>
+      <span className="item-details">{item.CategoryName}</span>
       <button className="edit-button" onClick={() => onEdit(item)}>
         <Edit />
       </button>
-      <button className="delete-button" onClick={()=> onDelete(item.CategoryID)}>
+      <button
+        className="delete-button"
+        onClick={() => onDelete(item.CategoryID)}
+      >
         <Delete />
       </button>
     </li>
   );
 };
-
-
 
 const ListCategories = ({ items, title, onEdit }) => {
   // State to manage whether the edit form is open or not
@@ -40,13 +38,16 @@ const ListCategories = ({ items, title, onEdit }) => {
   const handleDelete = async (item) => {
     try {
       // Assuming item.ProductID is sent to the backend for deletion
-      const response = await fetch("http://localhost:5000/api/deletecategories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ CategoryID: item }), // Send ProductID for deletion
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/deletecategories",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ CategoryID: item }), // Send ProductID for deletion
+        }
+      );
 
       if (response.ok) {
         console.log("Category deleted successfully");
@@ -78,7 +79,6 @@ const ListCategories = ({ items, title, onEdit }) => {
           onClose={handleCloseEditForm}
           product={editItem}
           onSave={(editedCategory) => {
-            // Handle saving the edited product details
             console.log("Edited Category:", editedCategory);
             handleCloseEditForm(); // Close the edit form after saving
           }}

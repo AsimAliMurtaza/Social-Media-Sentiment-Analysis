@@ -4,13 +4,10 @@ import { Box } from "@mui/material";
 import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
-import ListPost from "../components/ListItem/ListPost"
+import ListPost from "../components/ListItem/ListPost";
 import { useState, useEffect } from "react";
 
-
 export default function PostsPage() {
-
-  
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -30,7 +27,6 @@ export default function PostsPage() {
     fetchUsers();
   }, []);
 
-
   return (
     <>
       <div className="body-container">
@@ -38,8 +34,7 @@ export default function PostsPage() {
         <Box height={50} />
         <Box sx={{ display: "flex", marginLeft: "-5%" }}>
           <SideNavbar />
-            <CustomCard inputForm={<ListPost posts={posts} />}/>
-
+          <CustomCard inputForm={<ListPost posts={posts} />} />
         </Box>
       </div>
     </>

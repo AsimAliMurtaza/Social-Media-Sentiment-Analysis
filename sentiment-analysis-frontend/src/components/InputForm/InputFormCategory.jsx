@@ -9,13 +9,16 @@ function InputFormCategory() {
     event.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/createcategories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ customCategory }), // Sending only customCategory to the backend
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/createcategories",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ customCategory }), // Sending only customCategory to the backend
+        }
+      );
       if (response.ok) {
         console.log("Data sent successfully");
         setCustomCategory(""); // Clear the text field after successful submission

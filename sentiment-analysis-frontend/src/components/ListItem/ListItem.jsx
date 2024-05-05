@@ -4,7 +4,6 @@ import EditProductForm from "../InputForm/InputFormEditProduct"; // Import the E
 import { Delete, Edit } from "@mui/icons-material";
 
 const ListItem = ({ item, onEdit, onDelete }) => {
-  
   return (
     <li className="list-item">
       <span className="item-details">
@@ -13,14 +12,15 @@ const ListItem = ({ item, onEdit, onDelete }) => {
       <button className="edit-button" onClick={() => onEdit(item)}>
         <Edit />
       </button>
-      <button className="delete-button" onClick={()=> onDelete(item.ProductID)}>
+      <button
+        className="delete-button"
+        onClick={() => onDelete(item.ProductID)}
+      >
         <Delete />
       </button>
     </li>
   );
 };
-
-
 
 const List = ({ items, title, onEdit }) => {
   // State to manage whether the edit form is open or not

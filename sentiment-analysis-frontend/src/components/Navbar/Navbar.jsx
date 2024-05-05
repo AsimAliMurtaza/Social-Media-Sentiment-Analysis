@@ -99,7 +99,6 @@ export default function Navbar() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
-
       </MenuItem>
     </Menu>
   );

@@ -67,7 +67,9 @@ const EditProductForm = ({ open, onClose, product }) => {
   useEffect(() => {
     async function fetchCategory() {
       try {
-        const response = await fetch("http://localhost:5000/api/viewcategories");
+        const response = await fetch(
+          "http://localhost:5000/api/viewcategories"
+        );
         if (response.ok) {
           const data = await response.json();
           setCategories(data);

@@ -71,7 +71,12 @@ export default function ProductCategoryForm() {
             }}
           >
             <Card
-              sx={{ minWidth: 400, marginTop: 10, marginLeft: 50, height: "83vh" }}
+              sx={{
+                minWidth: 400,
+                marginTop: 10,
+                marginLeft: 50,
+                height: "83vh",
+              }}
             >
               <CardContent>
                 <form onSubmit={handleProductSubmit}>
