@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Paper,
   Grid,
@@ -16,89 +16,130 @@ import {
   Mood,
   EmojiEmotions,
   Comment,
+  LinkedIn,
 } from "@mui/icons-material";
+import { useLocation } from "react-router-dom";
 
 const EngagerPage = () => {
-  // Sample list of posts with reactions and comments
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      content: "This is post 1",
-      reactions: {
-        like: 0,
-        love: 0,
-        sad: 0,
-        angry: 0,
-        wow: 0,
-        haha: 0,
-      },
-      comments: [],
-    },
-    {
-      id: 2,
-      content: "This is post 2",
-      reactions: {
-        like: 0,
-        love: 0,
-        sad: 0,
-        angry: 0,
-        wow: 0,
-        haha: 0,
-      },
-      comments: [],
-    },
-    {
-      id: 3,
-      content: "This is post 3",
-      reactions: {
-        like: 0,
-        love: 0,
-        sad: 0,
-        angry: 0,
-        wow: 0,
-        haha: 0,
-      },
-      comments: [],
-    },
-  ]);
+  const location = useLocation();
+  const [engagerId, setEngagerId] = useState(null);
+  const [platformId, setPlatformId] = useState(null);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
 
-  // State for managing comment text
+  useEffect(() => {
+    // Extract engagerId and platformId from location state
+    console.log(location);
+    if (location.state) {
+      const { platformId, username, email } = location.state;
+      setPlatformId(platformId);
+      setUsername(username);
+      setEmail(email);
+      console.log("platformId", platformId);
+      console.log("username", username);
+      console.log("email", email);
+    }
+  }, [location.state]);
+  const [posts, setPosts] = useState([]);
   const [commentText, setCommentText] = useState("");
-
-  // State for managing which posts the user has reacted to
   const [reactedPosts, setReactedPosts] = useState([]);
+  const [commentingOnPostId, setCommentingOnPostId] = useState(null);
+  const [reactions, setReactions] = useState([]);
 
-  // Function to handle reacting to a post
-  const reactToPost = (postId, reaction) => {
-    // Check if the user has already reacted to this post
-    if (!reactedPosts.includes(postId)) {
-      // Find the post by postId
-      const updatedPosts = posts.map((post) => {
-        if (post.id === postId) {
-          // Increment the reaction count
-          return {
-            ...post,
-            reactions: {
-              ...post.reactions,
-              [reaction]: post.reactions[reaction] + 1,
-            },
-          };
-        }
-        return post;
+  const sendCommentToBackend = async (
+    postId,
+    username,
+    email,
+    commentContent
+  ) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/addcomment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: postId,
+          username: username,
+          email: email,
+          commentContent: commentContent,
+        }),
       });
+      if (response.ok) {
+        console.log("Comment added successfully");
+        // You can perform additional actions here if needed
+      } else {
+        console.error("Failed to add comment");
+      }
+    } catch (error) {
+      console.error("Error sending comment:", error);
+    }
+  };
 
-      // Update the state with the new reactions and mark the post as reacted
-      setPosts(updatedPosts);
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch("http://localhost:5000/api/viewposts");
+        if (response.ok) {
+          const data = await response.json();
+          setPosts(data);
+          console.log("posts fetched successfully:", data);
+        } else {
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    }
+    fetchPosts();
+  }, []);
+
+  const reactToPost = async (postId, reactionType) => {
+    if (!reactedPosts.includes(postId)) {
+      try {
+        const response = await fetch("http://localhost:5000/api/reacttopost", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            postId: postId,
+            username: username,
+            email: email,
+            platformId: platformId,
+            reactionType: reactionType,
+          }),
+        });
+        if (response.ok) {
+          console.log("Reaction added successfully");
+          // Update UI or perform additional actions if needed
+        } else {
+          console.error("Failed to add reaction");
+        }
+      } catch (error) {
+        console.error("Error sending reaction:", error);
+      }
+
+      // const updatedPosts = posts.map((post) => {
+      //   if (post.PostID === postId) {
+      //     return {
+      //       ...post,
+      //       reactions: {
+      //         ...post.reactions,
+      //         [reactionTypeMap[reactionType]]:
+      //           post.reactions[reactionTypeMap[reactionType]] + 1,
+      //       },
+      //     };
+      //   }
+      //   return post;
+      // });
+      // setPosts(updatedPosts);
       setReactedPosts([...reactedPosts, postId]);
     }
   };
 
-  // Function to handle submitting a comment
-  const handleSubmitComment = (postId) => {
-    // Find the post by postId
+  const handleSubmitComment = async (postId) => {
     const updatedPosts = posts.map((post) => {
       if (post.id === postId) {
-        // Add the comment to the post
         return {
           ...post,
           comments: [...post.comments, commentText],
@@ -106,16 +147,21 @@ const EngagerPage = () => {
       }
       return post;
     });
-
-    // Update the state with the new comments
     setPosts(updatedPosts);
-
-    // Clear comment text
     setCommentText("");
+
+    // Send comment to backend
+    await sendCommentToBackend(postId, username, email, commentText);
   };
 
-  // State for managing which post is being commented on
-  const [commentingOnPostId, setCommentingOnPostId] = useState(null);
+  const reactionTypeMap = {
+    1: "angry",
+    2: "sad",
+    3: "wow",
+    4: "haha",
+    5: "like",
+    6: "love",
+  };
 
   return (
     <Grid
@@ -145,9 +191,10 @@ const EngagerPage = () => {
           Engager Dashboard
         </Typography>
         <Divider style={{ marginBottom: "20px" }} />
+
         {posts.map((post) => (
           <div
-            key={post.id}
+            key={post.PostID}
             style={{
               marginBottom: "20px",
               display: "flex",
@@ -156,68 +203,57 @@ const EngagerPage = () => {
           >
             <div style={{ flex: 1 }}>
               <Typography variant="body1" style={{ marginBottom: "10px" }}>
-                {post.content}
+                {post.PostContent}
               </Typography>
               <div>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "like")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "like")}
                 >
                   <ThumbUp />
                 </IconButton>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "love")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "love")}
                 >
                   <Favorite />
                 </IconButton>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "sad")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "sad")}
                 >
                   <MoodBad />
                 </IconButton>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "angry")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "angry")}
                 >
                   <SentimentVeryDissatisfied />
                 </IconButton>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "wow")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "wow")}
                 >
                   <Mood />
                 </IconButton>
                 <IconButton
-                  disabled={reactedPosts.includes(post.id)}
-                  onClick={() => reactToPost(post.id, "haha")}
+                  disabled={reactedPosts.includes(post.PostID)}
+                  onClick={() => reactToPost(post.PostID, "haha")}
                 >
                   <EmojiEmotions />
                 </IconButton>
               </div>
-              <Typography
-                variant="body2"
-                style={{ marginTop: "10px", color: "#888" }}
-              >
-                Reactions:
-                {Object.entries(post.reactions).map(([reaction, count]) => (
-                  <span key={reaction} style={{ marginLeft: "5px" }}>
-                    {`${reaction}: ${count}`}
-                  </span>
-                ))}
-              </Typography>
             </div>
             <div>
               <Button
                 variant="outlined"
                 color="primary"
                 endIcon={<Comment />}
-                onClick={() => setCommentingOnPostId(post.id)}
+                onClick={() => setCommentingOnPostId(post.PostID)}
               >
                 Comment
               </Button>
-              {commentingOnPostId === post.id && (
+              {commentingOnPostId === post.PostID && (
                 <div style={{ display: "flex", marginTop: "10px" }}>
                   <TextField
                     variant="outlined"
@@ -230,7 +266,7 @@ const EngagerPage = () => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => handleSubmitComment(post.id)}
+                    onClick={() => handleSubmitComment(post.PostID)}
                   >
                     Submit
                   </Button>

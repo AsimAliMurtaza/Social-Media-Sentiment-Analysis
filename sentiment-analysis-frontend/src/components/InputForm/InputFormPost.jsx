@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-
-  Snackbar,
-} from "@mui/material";
+import { TextField, Button, Typography, Snackbar } from "@mui/material";
 
 function PostForm() {
   const [content, setContent] = useState(""); // State to track the content of the text field
@@ -35,6 +29,7 @@ function PostForm() {
 
   const handleChange = (event) => {
     setContent(event.target.value); // Update the content state with the new value
+    handleSearchProducts(products); // Call handleSearchProducts function with the products array as an argument
   };
 
   const handleFileChange = (event) => {
@@ -129,7 +124,6 @@ function PostForm() {
         fullWidth
         rows={4}
         onChange={handleChange} // Call handleChange function on change
-        onchange={handleSearchProducts}
       />
 
       <div

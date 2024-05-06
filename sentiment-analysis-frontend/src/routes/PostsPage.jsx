@@ -5,6 +5,9 @@ import Navbar from "../components/Navbar/Navbar";
 import "../routes/Dashboard.css";
 import CustomCard from "../components/Card/CustomCard";
 import PostForm from "../components/InputForm/InputFormPost";
+import { useState } from "react";
+import { useEffect } from "react";
+
 export default function PostsPage() {
   return (
     <>

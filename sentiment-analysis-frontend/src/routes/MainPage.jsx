@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -9,43 +9,93 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const MainPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [platform, setPlatform] = useState("");
+  const [gender, setGender] = useState("");
+  const [engagerId, setEngagerId] = useState(); // State to store the engagerId
+  const [platformId, setPlatformId] = useState();
   const [redirectTo, setRedirectTo] = useState("");
+  const [navTrue, setNavTrue] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSignInSignUp = () => {
-    // You can handle sign-in/sign-up logic here
-    // For demonstration, let's just display user information
-    console.log(
-      `Username: ${username}, Email: ${email}, Role: ${role}, Platform: ${platform}`
-    );
+  useEffect(() => {
+    if (navTrue)
+    {navigate("/postsfeed", { state: { platformId, username, email } });}
+  
+    
+  }, [navTrue])
+  
 
-    // If username is not empty and role is admin, set redirectTo to /viewproducts
-    if (username.trim() !== "" && role === "admin") {
-      setRedirectTo("/viewproducts");
+  const handleSignInSignUp = async () => {
+    if (!username.trim() || !role) return;
+
+    if (role === "admin") {
+      sendToProfile(username, platform === "instagram" ? 12 : 13);
+    } else if (role === "engager") {
+      sendToProfile(
+        username,
+        email,
+        gender,
+        platform === "instagram" ? 12 : 13
+      );
     }
-    // If username is not empty and role is engager, set redirectTo to /feed
-    else if (username.trim() !== "" && role === "engager") {
-      setRedirectTo("/postsfeed");
+  };
+
+  const sendToProfile = async (
+    username,
+    emailOrPlatformID,
+    gender = null,
+    platformID = null
+  ) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email: role === "engager" ? emailOrPlatformID : null,
+          gender: role === "engager" ? gender : null,
+          platformID: role === "admin" ? emailOrPlatformID : platformID,
+        }),
+      });
+      if (response.ok) {
+        console.log("Data sent to Profile table successfully");
+        const data = await response.json();
+        const EngagerId = await data.engagerId // Assuming the backend returns the engagerId
+
+        if (username.trim() !== "" && role === "admin") {
+          navigate("/viewproducts");
+        } else if (username.trim() !== "" && role === "engager") {
+          setNavTrue(true);
+        }
+      } else {
+        console.error("Error sending data to Profile table");
+      }
+    } catch (error) {
+      console.error("Error sending data to Profile table:", error);
     }
   };
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
-    // Clear email when role changes
     setEmail("");
+    setPlatform("");
+    setGender("");
   };
 
   const handlePlatformChange = (event) => {
     setPlatform(event.target.value);
+    setPlatformId(event.target.value === "instagram" ? 12 : 13);
   };
 
   if (redirectTo) {
-    // Redirect to the appropriate page
     window.location.href = redirectTo;
     return null;
   }
@@ -96,6 +146,22 @@ const MainPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+            )}
+            {role === "engager" && (
+              <Select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                fullWidth
+                variant="outlined"
+                displayEmpty
+              >
+                <MenuItem value="" disabled>
+                  Select Gender
+                </MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
             )}
             {role && (
               <Select
