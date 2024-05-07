@@ -17,7 +17,7 @@ const AppBar = styled(
   {}
 )(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor: "rgb(60,60,60)",
+  backgroundColor: "rgb(48,48,48)",
   color: "rgb(255,255,255))",
   elevation: 0,
 }));

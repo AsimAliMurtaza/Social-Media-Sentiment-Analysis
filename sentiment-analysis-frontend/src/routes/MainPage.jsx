@@ -10,6 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router";
+import Navbar from "../components/Navbar/Navbar";
 
 const MainPage = () => {
   const [username, setUsername] = useState("");
@@ -24,12 +25,10 @@ const MainPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (navTrue)
-    {navigate("/postsfeed", { state: { platformId, username, email } });}
-  
-    
-  }, [navTrue])
-  
+    if (navTrue) {
+      navigate("/postsfeed", { state: { platformId, username, email } });
+    }
+  }, [navTrue]);
 
   const handleSignInSignUp = async () => {
     if (!username.trim() || !role) return;
@@ -68,7 +67,7 @@ const MainPage = () => {
       if (response.ok) {
         console.log("Data sent to Profile table successfully");
         const data = await response.json();
-        const EngagerId = await data.engagerId // Assuming the backend returns the engagerId
+        const EngagerId = await data.engagerId; // Assuming the backend returns the engagerId
 
         if (username.trim() !== "" && role === "admin") {
           navigate("/viewproducts");
@@ -101,95 +100,98 @@ const MainPage = () => {
   }
 
   return (
-    <Container
-      maxWidth="sm"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div style={{ textAlign: "center" }}>
-        <Typography variant="h4" gutterBottom>
-          Social Media Sentiment Analysis
-        </Typography>
-        <Card>
-          <CardContent
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-          >
-            <TextField
-              label="Username"
-              variant="outlined"
-              fullWidth
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Select
-              value={role}
-              onChange={handleRoleChange}
-              fullWidth
-              variant="outlined"
-              displayEmpty
+    <>
+      <Navbar />
+      <Container
+        maxWidth="sm"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <Typography variant="h4" gutterBottom>
+            Social Media Sentiment Analysis
+          </Typography>
+          <Card>
+            <CardContent
+              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
             >
-              <MenuItem value="" disabled>
-                Select Role
-              </MenuItem>
-              <MenuItem value="engager">Engager</MenuItem>
-              <MenuItem value="admin">Admin</MenuItem>
-            </Select>
-            {role === "engager" && (
               <TextField
-                label="Email (Optional)"
+                label="Username"
                 variant="outlined"
                 fullWidth
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-            )}
-            {role === "engager" && (
               <Select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
+                value={role}
+                onChange={handleRoleChange}
                 fullWidth
                 variant="outlined"
                 displayEmpty
               >
                 <MenuItem value="" disabled>
-                  Select Gender
+                  Select Role
                 </MenuItem>
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
+                <MenuItem value="engager">Engager</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
               </Select>
-            )}
-            {role && (
-              <Select
-                value={platform}
-                onChange={handlePlatformChange}
+              {role === "engager" && (
+                <TextField
+                  label="Email (Optional)"
+                  variant="outlined"
+                  fullWidth
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              )}
+              {role === "engager" && (
+                <Select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  fullWidth
+                  variant="outlined"
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>
+                    Select Gender
+                  </MenuItem>
+                  <MenuItem value="male">Male</MenuItem>
+                  <MenuItem value="female">Female</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              )}
+              {role && (
+                <Select
+                  value={platform}
+                  onChange={handlePlatformChange}
+                  fullWidth
+                  variant="outlined"
+                  displayEmpty
+                >
+                  <MenuItem value="" disabled>
+                    Select Platform
+                  </MenuItem>
+                  <MenuItem value="instagram">Instagram</MenuItem>
+                  <MenuItem value="facebook">Facebook</MenuItem>
+                </Select>
+              )}
+              <Button
+                variant="contained"
+                color="primary"
                 fullWidth
-                variant="outlined"
-                displayEmpty
+                onClick={handleSignInSignUp}
               >
-                <MenuItem value="" disabled>
-                  Select Platform
-                </MenuItem>
-                <MenuItem value="instagram">Instagram</MenuItem>
-                <MenuItem value="facebook">Facebook</MenuItem>
-              </Select>
-            )}
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              onClick={handleSignInSignUp}
-            >
-              Sign In / Sign Up
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    </Container>
+                Sign In / Sign Up
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </Container>
+    </>
   );
 };
 

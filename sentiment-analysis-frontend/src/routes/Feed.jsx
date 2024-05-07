@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar/Navbar";
 import {
   Paper,
   Grid,
@@ -7,6 +8,7 @@ import {
   Divider,
   Button,
   TextField,
+  Box,
 } from "@mui/material";
 import {
   ThumbUp,
@@ -16,7 +18,6 @@ import {
   Mood,
   EmojiEmotions,
   Comment,
-  LinkedIn,
 } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 
@@ -164,119 +165,125 @@ const EngagerPage = () => {
   };
 
   return (
-    <Grid
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      style={{ minHeight: "100vh", background: "#f8f9fa" }}
-    >
-      <Paper
-        elevation={3}
-        style={{
-          padding: "40px",
-          width: "80%",
-          maxWidth: "800px",
-          background: "white",
-          borderRadius: "20px",
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <Typography
-          variant="h4"
-          align="center"
-          gutterBottom
-          style={{ marginBottom: "20px" }}
+    <>
+      <Navbar />
+      <Box height={50} />
+      <Box sx={{ display: "flex", marginLeft: "-5%" }}>
+        <Grid
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          style={{ minHeight: "100vh", background: "#f8f9fa" }}
         >
-          Engager Dashboard
-        </Typography>
-        <Divider style={{ marginBottom: "20px" }} />
-
-        {posts.map((post) => (
-          <div
-            key={post.PostID}
+          <Paper
+            elevation={3}
             style={{
-              marginBottom: "20px",
-              display: "flex",
-              alignItems: "center",
+              padding: "40px",
+              width: "80%",
+              maxWidth: "800px",
+              background: "white",
+              borderRadius: "20px",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <div style={{ flex: 1 }}>
-              <Typography variant="body1" style={{ marginBottom: "10px" }}>
-                {post.PostContent}
-              </Typography>
-              <div>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "like")}
-                >
-                  <ThumbUp />
-                </IconButton>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "love")}
-                >
-                  <Favorite />
-                </IconButton>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "sad")}
-                >
-                  <MoodBad />
-                </IconButton>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "angry")}
-                >
-                  <SentimentVeryDissatisfied />
-                </IconButton>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "wow")}
-                >
-                  <Mood />
-                </IconButton>
-                <IconButton
-                  disabled={reactedPosts.includes(post.PostID)}
-                  onClick={() => reactToPost(post.PostID, "haha")}
-                >
-                  <EmojiEmotions />
-                </IconButton>
-              </div>
-            </div>
-            <div>
-              <Button
-                variant="outlined"
-                color="primary"
-                endIcon={<Comment />}
-                onClick={() => setCommentingOnPostId(post.PostID)}
+            <Typography
+              variant="h4"
+              align="center"
+              gutterBottom
+              style={{ marginBottom: "20px" }}
+            >
+              Engager Dashboard
+            </Typography>
+            <Divider style={{ marginBottom: "20px" }} />
+
+            {posts.map((post) => (
+              <div
+                key={post.PostID}
+                style={{
+                  marginBottom: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
               >
-                Comment
-              </Button>
-              {commentingOnPostId === post.PostID && (
-                <div style={{ display: "flex", marginTop: "10px" }}>
-                  <TextField
-                    variant="outlined"
-                    placeholder="Add a comment..."
-                    fullWidth
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                    style={{ marginRight: "10px" }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleSubmitComment(post.PostID)}
-                  >
-                    Submit
-                  </Button>
+                <div style={{ flex: 1 }}>
+                  <Typography variant="body1" style={{ marginBottom: "10px" }}>
+                    {post.PostContent}
+                  </Typography>
+                  <div>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "like")}
+                    >
+                      <ThumbUp />
+                    </IconButton>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "love")}
+                    >
+                      <Favorite />
+                    </IconButton>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "sad")}
+                    >
+                      <MoodBad />
+                    </IconButton>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "angry")}
+                    >
+                      <SentimentVeryDissatisfied />
+                    </IconButton>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "wow")}
+                    >
+                      <Mood />
+                    </IconButton>
+                    <IconButton
+                      disabled={reactedPosts.includes(post.PostID)}
+                      onClick={() => reactToPost(post.PostID, "haha")}
+                    >
+                      <EmojiEmotions />
+                    </IconButton>
+                  </div>
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </Paper>
-    </Grid>
+                <div>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    endIcon={<Comment />}
+                    onClick={() => setCommentingOnPostId(post.PostID)}
+                  >
+                    Comment
+                  </Button>
+                  {commentingOnPostId === post.PostID && (
+                    <div style={{ display: "flex", marginTop: "10px" }}>
+                      <TextField
+                        variant="outlined"
+                        placeholder="Add a comment..."
+                        fullWidth
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        style={{ marginRight: "10px" }}
+                      />
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleSubmitComment(post.PostID)}
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </Paper>
+        </Grid>
+      </Box>
+    </>
   );
 };
 

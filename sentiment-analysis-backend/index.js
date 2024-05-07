@@ -57,7 +57,7 @@ const PORT = process.env.PORT || 5000;
 // Database configuration
 const config = {
   server: "DESKTOP-UIFCNNO",
-  database: "CLassProject",
+  database: "ClassProject",
   driver: "msnodesqlv8",
   options: {
     trustedConnection: true,

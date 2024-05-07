@@ -27,7 +27,6 @@ function App() {
             <Route path="/viewusers" element={<ViewUsers />} />
             <Route path="/addusers" element={<AddUsers />} />
             <Route path="/select-category" element={<ProductCategoryForm />} />
-            <Route path="/settings" element={<Settings />} />
             <Route path="/createpost" element={<PostsPage />} />
             <Route path="/viewpost" element={<ViewPost />} />
             <Route path="/manageposts" element={<ManagePosts />} />

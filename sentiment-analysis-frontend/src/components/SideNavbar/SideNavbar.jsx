@@ -121,11 +121,6 @@ const items = [
       },
     ],
   },
-  {
-    text: "Settings",
-    icon: <Settings sx={{ color: "rgb(255,255,255)" }} />,
-    path: "/settings",
-  },
 ];
 
 const drawerWidth = 265;
@@ -137,7 +132,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  backgroundColor: "rgb(48,48,48)",
+  backgroundColor: "rgb(60,60,60)",
   color: "rgb(255,255,255)",
 });
 
@@ -146,7 +141,7 @@ const closedMixin = (theme) => ({
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  backgroundColor: "rgb(48,48,48)",
+  backgroundColor: "rgb(60,60,60)",
   color: "rgb(255,255,255)",
 
   overflowX: "hidden",
